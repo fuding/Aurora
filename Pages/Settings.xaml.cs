@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using System.IO.Ports;
 using System.Windows.Shapes;
 
 namespace Aurora.Pages
@@ -20,9 +21,14 @@ namespace Aurora.Pages
     /// </summary>
     public partial class Settings : UserControl
     {
+        MainWindow ParentWindow = ((MainWindow)System.Windows.Application.Current.MainWindow);
+        private string selectedPort;
+
         public Settings()
         {
             InitializeComponent();
+
+            updatePorts();
 
             top_led.Text = Properties.Settings.Default.top_led.ToString();
             side_led.Text = Properties.Settings.Default.side_led.ToString();
@@ -43,35 +49,71 @@ namespace Aurora.Pages
                 cb4.IsChecked = true;
         }
 
-        public int getTopLedCount()
+        public void updatePorts()
+        {
+            serial_port.ItemsSource = null;
+            serial_port.Items.Clear();
+
+            string[] portsList = { "No port selected" };
+            //string[] portsList = { };
+            portsList = portsList.Concat(SerialPort.GetPortNames()).ToArray();
+
+            foreach(string port in portsList)
+            {
+                serial_port.Items.Add(port);
+            }
+
+            serial_port.Items.Refresh();
+        }
+
+        private bool handle = true;
+        private void portsClosed(object sender, EventArgs e)
+        {
+            if (handle) handleComboChange();
+            handle = true;
+        }
+
+        private void portsChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox cmb = sender as ComboBox;
+            handle = !cmb.IsDropDownOpen;
+            handleComboChange();
+        }
+        private void handleComboChange()
+        {
+            selectedPort = serial_port.SelectedItem.ToString();
+        }
+
+        private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
             int i = 0;
             if (!Int32.TryParse(top_led.Text, out i))
                 i = -1;
-            return i;
-        }
+            Properties.Settings.Default.top_led = i;
 
-        public int getSideLedCount()
-        {
-            int i = 0;
             if (!Int32.TryParse(side_led.Text, out i))
                 i = -1;
-            return i;
-        }
+            Properties.Settings.Default.side_led = i;
 
-        public int getLedDir()
-        {
-            return led_dir.SelectedIndex;
-        }
-        
-        public int getLedInput()
-        {
-            return led_input.SelectedIndex;
-        }
+            Properties.Settings.Default.led_dir = led_dir.SelectedIndex;
+            Properties.Settings.Default.led_input = led_input.SelectedIndex;
 
-        public bool[] getActiveBars()
+            Properties.Settings.Default.active_left = cb1.IsChecked.Value;
+            Properties.Settings.Default.active_right = cb2.IsChecked.Value;
+            Properties.Settings.Default.active_top = cb3.IsChecked.Value;
+            Properties.Settings.Default.active_bottom = cb4.IsChecked.Value;
+
+            Properties.Settings.Default.serial_port = selectedPort;
+
+            Properties.Settings.Default.Save();
+
+            ParentWindow.Panel.Clear();
+            ParentWindow.Panel.Add(new Dashboard());
+        }
+        private void ButtonCancel_Click(object sender, RoutedEventArgs e)
         {
-            return new bool[] { cb1.IsChecked.Value, cb2.IsChecked.Value, cb3.IsChecked.Value, cb4.IsChecked.Value };
+            ParentWindow.Panel.Clear();
+            ParentWindow.Panel.Add(new Dashboard());
         }
     }
 }

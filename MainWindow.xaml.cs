@@ -24,36 +24,29 @@ namespace Aurora
     /// </summary>
     public partial class MainWindow : Window
     {
-        ScreenColor screenSource;
-        UIElementCollection Panel;
-        Dashboard Dashboard = new Dashboard();
-        Calibration Calibration = new Calibration();
-        Settings Settings = new Settings();
+        NotifyIcon ni = new NotifyIcon();
 
-        int view = 0;
-        int tickRate = 200;
-        int status = 0;
+        public UIElementCollection Panel;
+        public int tickRate = 200;
+
         public MainWindow()
         {
-            screenSource = new ScreenColor();
-
-            Dashboard.changeInfo("Screen width: " + screenSource.getWidth() + "\nScreen Height: " + screenSource.getHeight());
-            
             InitializeComponent();
-            Panel = PagePanel.Children;
-
-            Panel.Add(Dashboard);
-
             Tray();
+
+            Panel = PagePanel.Children;
+            Panel.Add(new Dashboard());
+
             AsyncScreenshot();
         }
         private void Tray()
         {
-            System.Windows.Forms.NotifyIcon ni = new System.Windows.Forms.NotifyIcon();
             ni.Icon = System.Drawing.Icon.ExtractAssociatedIcon(System.Reflection.Assembly.GetEntryAssembly().ManifestModule.Name);
             ni.Visible = true;
             ni.DoubleClick += delegate (object sender, EventArgs args)
             {
+                ni.Visible = false;
+
                 this.Show();
                 this.WindowState = WindowState.Normal;
             };
@@ -61,7 +54,10 @@ namespace Aurora
         protected override void OnStateChanged(EventArgs e)
         {
             if (WindowState == System.Windows.WindowState.Minimized)
+            {
+                ni.Visible = true;
                 this.Hide();
+            }
             base.OnStateChanged(e);
         }
 
@@ -73,7 +69,7 @@ namespace Aurora
               {
                   Action refreshAction = delegate
                   {
-                      screenSource.Refresh();
+                      //screenSource.Refresh();
                       counter++;
                   };
                   while (true)
@@ -81,6 +77,7 @@ namespace Aurora
                       System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, refreshAction);
                       this.Dispatcher.Invoke(() =>
                       {
+                          /*
                           tickRateText.Text = "Ticks: " + counter;
 
                           System.Drawing.Color pixel0 = screenSource.getPixel(1, 1); 
@@ -105,91 +102,12 @@ namespace Aurora
 
                           //scWidth.Text = "Pixel from 100 x 100 have color: R:" + pixel.R + ", G: " + pixel.G + ", B: " + pixel.B;
                           //scHeight.Text = "Pixel from 500 x 500 have color: R:" + pixel2.R + ", G: " + pixel2.G + ", B: " + pixel2.B;
+                          */
                       });
                       System.Threading.Thread.Sleep(tickRate);
                   }
               }
             );
-        }
-
-        private void showDashboard()
-        {
-            view = 0;
-            ButtonSettings.Visibility = Visibility.Visible;
-            Button1Title.Text = (status == 1 ? "Stop" : "Start");
-            Button2Title.Text = "Calibration";
-            Button3Title.Text = "Settings";
-            Panel.Clear();
-            Panel.Add(Dashboard);
-        }
-
-        private void ButtonAction_Click(object sender, RoutedEventArgs e)
-        {
-            if (view == 0)
-            {
-                if (status == 0)
-                {
-                    status = 1;
-                    Button1Title.Text = "Stop";
-                }
-                else
-                {
-                    status = 0;
-                    Button1Title.Text = "Start";
-                }
-            }else if(view == 2)
-            {
-                Properties.Settings.Default.led_dir = Settings.getLedDir();
-                Properties.Settings.Default.led_input = Settings.getLedInput();
-
-                Properties.Settings.Default.top_led = Settings.getTopLedCount();
-                Properties.Settings.Default.side_led = Settings.getSideLedCount();
-
-                Properties.Settings.Default.active_left = Settings.getActiveBars()[0];
-                Properties.Settings.Default.active_right = Settings.getActiveBars()[1];
-                Properties.Settings.Default.active_top = Settings.getActiveBars()[2];
-                Properties.Settings.Default.active_bottom = Settings.getActiveBars()[3];
-
-                Properties.Settings.Default.Save();
-
-                showDashboard();
-            }
-        }
-
-        private void ButtonSettings_Click(object sender, RoutedEventArgs e)
-        {
-            if(view == 1)
-            {
-                showDashboard();
-            }
-            else
-            {
-                view = 2;
-                ButtonSettings.Visibility = Visibility.Hidden;
-                Button1Title.Text = "Save";
-                Button2Title.Text = "Cancel";
-                Panel.Clear();
-                Panel.Add(Settings);
-            }
-
-        }
-
-        private void ButtonCalibration_Click(object sender, RoutedEventArgs e)
-        {
-            
-            if (view == 2)
-            {
-                showDashboard();
-            }
-            else
-            {
-                view = 1;
-                Panel.Clear();
-                Button1Title.Text = "Save";
-                Button2Title.Text = "Run calibration";
-                Button3Title.Text = "Cancel";
-                Panel.Add(Calibration);
-            }
         }
     }
 }

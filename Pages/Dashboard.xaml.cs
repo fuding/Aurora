@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Management;
 
 namespace Aurora.Pages
 {
@@ -20,19 +22,26 @@ namespace Aurora.Pages
     /// </summary>
     public partial class Dashboard : UserControl
     {
+        MainWindow ParentWindow = ((MainWindow)System.Windows.Application.Current.MainWindow);
         public Dashboard()
         {
             InitializeComponent();
         }
 
-        public void changeInfo(string t1)
+        private void ButtonAction_Click(object sender, RoutedEventArgs e)
         {
-            scInfo.Text = t1;
         }
 
-        public void changePixel(string t1)
+        private void ButtonCalibration_Click(object sender, RoutedEventArgs e)
         {
-            pixelInfo.Text = t1;
+            ParentWindow.Panel.Clear();
+            ParentWindow.Panel.Add(new Calibration());
+        }
+
+        private void ButtonSettings_Click(object sender, RoutedEventArgs e)
+        {
+            ParentWindow.Panel.Clear();
+            ParentWindow.Panel.Add(new Settings());
         }
     }
 }

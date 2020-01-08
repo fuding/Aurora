@@ -6,40 +6,13 @@
         xmlns:local="clr-namespace:Aurora"
         mc:Ignorable="d"
         Title="Aurora"
-        Height="600"
-        MinHeight="600"
-        Width="1200"
+        Height="650"
+        MinHeight="650"
+        Width="1300"
         MinWidth="1200"
         Background="#222425"
         Foreground="#fff"
         WindowStartupLocation="CenterScreen">
-    <Grid Margin="15">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid x:Name="PagePanel" Grid.Row="0">
-
-        </Grid>
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0" Orientation="Horizontal">
-                <Button Name="ButtonAction" Style="{StaticResource FlatButton}" Click="ButtonAction_Click">
-                    <TextBlock x:Name="Button1Title" Margin="10" Text="Start"/>
-                </Button>
-                <Button Name="ButtonCalibration" Style="{StaticResource FlatButton}" Click="ButtonCalibration_Click">
-                    <TextBlock x:Name="Button2Title" Margin="10" Text="Calibration"/>
-                </Button>
-                <Button Name="ButtonSettings" Style="{StaticResource FlatButton}" Click="ButtonSettings_Click">
-                    <TextBlock x:Name="Button3Title" Margin="10" Text="Settings"/>
-                </Button>
-            </StackPanel>
-            <StackPanel Grid.Column="1" VerticalAlignment="Bottom">
-                <TextBlock TextAlignment="Right" x:Name="tickRateText" Text="Ticks: 0"/>
-            </StackPanel>
-        </Grid>
+    <Grid Margin="15" x:Name="PagePanel">
     </Grid>
 </Window>

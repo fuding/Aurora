@@ -6,9 +6,36 @@
              xmlns:local="clr-namespace:Aurora.Pages"
              mc:Ignorable="d">
     <Grid>
-        <StackPanel Grid.Row="0">
-            <TextBlock x:Name="scInfo"  Text=""/>
-            <TextBlock x:Name="pixelInfo" Text=""/>
-        </StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <StackPanel Grid.Row="0">
+                <TextBlock x:Name="scInfo"  Text=""/>
+                <TextBlock x:Name="pixelInfo" Text=""/>
+                <TextBlock x:Name="portsText" Text="" Margin="0,20,0,0"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                <Button Style="{StaticResource FlatButton}" Click="ButtonAction_Click">
+                    <TextBlock Margin="10" Text="Start"/>
+                </Button>
+                <Button Style="{StaticResource FlatButton}" Click="ButtonCalibration_Click">
+                    <TextBlock Margin="10" Text="Calibration"/>
+                </Button>
+                <Button Style="{StaticResource FlatButton}" Click="ButtonSettings_Click">
+                    <TextBlock Margin="10" Text="Settings"/>
+                </Button>
+            </StackPanel>
+            <StackPanel Grid.Column="1" VerticalAlignment="Bottom">
+                <TextBlock TextAlignment="Right" x:Name="tickRateText" Text="Ticks: 0"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

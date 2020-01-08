@@ -118,5 +118,17 @@ namespace Aurora.Properties {
                 this["active_left"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string serial_port {
+            get {
+                return ((string)(this["serial_port"]));
+            }
+            set {
+                this["serial_port"] = value;
+            }
+        }
     }
 }

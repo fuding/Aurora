@@ -20,9 +20,24 @@ namespace Aurora.Pages
     /// </summary>
     public partial class Calibration : UserControl
     {
+        MainWindow ParentWindow = ((MainWindow)System.Windows.Application.Current.MainWindow);
         public Calibration()
         {
             InitializeComponent();
+        }
+
+        private void ButtonSave_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void ButtonCalibrate_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void ButtonCancel_Click(object sender, RoutedEventArgs e)
+        {
+            ParentWindow.Panel.Clear();
+            ParentWindow.Panel.Add(new Dashboard());
         }
     }
 }
