@@ -29,6 +29,7 @@ namespace Aurora
         NotifyIcon ni = new NotifyIcon();
 
         public UIElementCollection Panel;
+        public SerialOutput serial = new SerialOutput();
         public ScreenColor screenSource = new ScreenColor();
         Process currentProc = Process.GetCurrentProcess();
         public int tickRate = 150;
@@ -96,8 +97,8 @@ namespace Aurora
                           System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, refreshAction);
                           this.Dispatcher.Invoke(() =>
                           {
-                              //SerialOutput serial = new SerialOutput();
-                              //serial.Send();
+                              serial = new SerialOutput();
+                              serial.Send();
 
                               if (!lockview)
                               {

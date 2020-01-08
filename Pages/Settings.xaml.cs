@@ -22,7 +22,7 @@ namespace Aurora.Pages
     public partial class Settings : UserControl
     {
         MainWindow ParentWindow = ((MainWindow)System.Windows.Application.Current.MainWindow);
-        private string selectedPort;
+        private string selectedPort = null;
 
         public Settings()
         {
@@ -56,8 +56,14 @@ namespace Aurora.Pages
 
             string[] portsList = SerialPort.GetPortNames();
 
+            int c = 0;
             foreach(string port in portsList)
             {
+                if(port == Properties.Settings.Default.serial_port)
+                {
+                    serial_port.SelectedIndex = c;
+                }
+                c++;
                 serial_port.Items.Add(port);
             }
 
@@ -80,7 +86,8 @@ namespace Aurora.Pages
         private void handleComboChange()
         {
             //Shit dunno work
-            selectedPort = serial_port.SelectedItem.ToString();
+            if(serial_port.SelectedItem != null)
+                selectedPort = serial_port.SelectedItem.ToString();
         }
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
@@ -102,7 +109,8 @@ namespace Aurora.Pages
             Properties.Settings.Default.active_top = cb3.IsChecked.Value;
             Properties.Settings.Default.active_bottom = cb4.IsChecked.Value;
 
-            Properties.Settings.Default.serial_port = selectedPort;
+            if(selectedPort != null)
+                Properties.Settings.Default.serial_port = selectedPort;
 
             Properties.Settings.Default.Save();
 

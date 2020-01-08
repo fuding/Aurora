@@ -5,30 +5,70 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO.Ports;
 using System.ComponentModel;
+using System.Windows;
 
 namespace Aurora.Assets
 {
-    class SerialOutput : IDisposable
+    public class SerialOutput
     {
-        private readonly byte[] preamble = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09 };
+        private readonly byte[] preamble = { 0x00, 0x01, 0x02 };
+        private string serialPortName = null;
+        
         private BackgroundWorker bgWorker = new BackgroundWorker();
-
         private SerialPort serialPort;
+
+        byte ledDir;
+
+        public SerialOutput()
+        {
+            Init();
+        }
+
+        public bool isOpen()
+        {
+            return serialPort.IsOpen;
+        }
+
+        private void Init()
+        {
+            serialPortName = Properties.Settings.Default.serial_port;
+            serialPort = new SerialPort(serialPortName, 115200);
+
+            if (Properties.Settings.Default.led_dir == 0)
+                ledDir = 0x00;
+            else
+                ledDir = 0x01;
+        }
 
         public byte[] Message()
         {
             byte[] message;
-            int counter = preamble.Length;
 
-            //message = new byte[preamble.Length + (15 * 1 * 3)];
-            message = new byte[preamble.Length];
-            Buffer.BlockCopy(preamble, 0, message, 0, preamble.Length);
-            /*
-            for (int i = 0; i < 15; i++)
+            //3 - wellcome, 1 - direction, 1 - mode, 1 - led count 128 * 3 (384)
+            message = new byte[3 + 1 + 1 + 1 + (128 * 3)];
+
+            //Preamble
+            message[0] = 0x00;
+            message[1] = 0x01;
+            message[2] = 0x02;
+
+            //Direction
+            message[3] = ledDir;
+
+            //Mode
+            message[4] = 0x00;
+
+            //Led Count
+            message[5] = 0x14;
+
+            int counter = 3 + 1 + 1 + 1;
+            for (int i = 0; i < 128; i++)
             {
-                Buffer.BlockCopy(new byte[255, 255, 255], 0, message, 0, 3);
+                message[counter++] = 0x00; //RED
+                message[counter++] = 0xFF; //GREEN
+                message[counter++] = 0xFF; //BLUE
             }
-            */
+
             return message;
         }
 
@@ -36,7 +76,7 @@ namespace Aurora.Assets
         {
             try
             {
-                serialPort = new SerialPort("COM3", 115200);
+                serialPort = new SerialPort(serialPortName, 115200);
                 serialPort.Open();
 
                 byte[] outputStream = Message();
@@ -54,28 +94,6 @@ namespace Aurora.Assets
                     serialPort.Dispose();
                 }
             }
-        }
-
-        public void Start()
-        {
-            if (!bgWorker.IsBusy)
-                bgWorker.RunWorkerAsync();
-        }
-
-        public void Stop()
-        {
-            if (bgWorker.IsBusy)
-                bgWorker.CancelAsync();
-        }
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-                Stop();
         }
     }
 }

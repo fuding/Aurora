@@ -21,7 +21,7 @@
                 <TextBox x:Name="side_led" Style="{StaticResource FlatInput}"></TextBox>
 
                 <TextBlock Text="Serial port for Arduino/ESP" Margin="0,15,0,0"/>
-                <ComboBox x:Name="serial_port" SelectionChanged="portsChanged" DropDownClosed="portsClosed">
+                <ComboBox x:Name="serial_port" SelectionChanged="portsChanged" DropDownClosed="portsClosed" SelectedIndex="0">
                 </ComboBox>
 
                 <TextBlock Text="LEDs direction" Margin="0,15,0,0"/>

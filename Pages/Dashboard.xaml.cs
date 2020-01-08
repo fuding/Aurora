@@ -43,6 +43,11 @@ namespace Aurora.Pages
             }
 
             serialPort.Text = Properties.Settings.Default.serial_port;
+
+            if (ParentWindow.serial.isOpen())
+                serialOpen.Text = "Open";
+            else
+                serialOpen.Text = "Closed";
         }
 
         private void Preview()
