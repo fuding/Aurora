@@ -13,6 +13,5 @@
         Background="#222425"
         Foreground="#fff"
         WindowStartupLocation="CenterScreen">
-    <Grid Margin="15" x:Name="PagePanel">
-    </Grid>
+    <Grid Margin="15" x:Name="PagePanel" />
 </Window>

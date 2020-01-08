@@ -28,7 +28,7 @@ namespace Aurora
 
         public UIElementCollection Panel;
         public ScreenColor screenSource = new ScreenColor();
-        public int tickRate = 250;
+        public int tickRate = 150;
         public int ticks = 0;
         public bool status = false;
 
@@ -71,6 +71,8 @@ namespace Aurora
                   Action refreshAction = delegate
                   {
                       //screenSource.Refresh();
+                      screenSource.Refresh(90);
+                      
                       ticks++;
                   };
                   while (true)

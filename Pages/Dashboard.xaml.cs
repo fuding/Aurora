@@ -35,9 +35,6 @@ namespace Aurora.Pages
             ticksCount.Text = "Ticks: " + ParentWindow.ticks.ToString();
 
             Preview();
-
-            ParentWindow.screenSource.Refresh();
-            DEBUGIMAGE.Source = ParentWindow.screenSource.debugPreview();
         }
 
         private void Preview()
@@ -64,22 +61,23 @@ namespace Aurora.Pages
                     verticalPixelArray.Add(currentPixel += pixelDistanceW);
             }
 
-            string debText = "Resolution: " + screenW + "/" + screenH + "\nDystans pixeli w poziomie: " + pixelDistanceW.ToString() + "\nDystans pixeli w pionie: " + pixelDistanceH.ToString();
+            debugText1.Text = "Resolution: " + screenW + "/" + screenH + "\nDystans pixeli w poziomie: " + pixelDistanceW.ToString() + "\nDystans pixeli w pionie: " + pixelDistanceH.ToString();
 
-            debText += "\n\nLista pixeli\n";
+            string debText2 = "\n\nHorizontal top pixels\n";
             foreach (int pixel in horizontalPixelArray)
             {
                 System.Drawing.Color pixelColor = ParentWindow.screenSource.getTop(pixel);
-                debText += "\nHorP - " + pixel + ":" + pixelDistanceH + " = R: " + pixelColor.R + ", G: " + pixelColor.G + ", B: " + pixelColor.B;
+                debText2 += "\nHorP - " + pixel + ":" + pixelDistanceH + " = R: " + pixelColor.R + ", G: " + pixelColor.G + ", B: " + pixelColor.B;
             }
+            debugText2.Text = debText2;
 
+            string debText3 = "\n\nHorizontal bottom pixels\n";
             foreach (int pixel in verticalPixelArray)
             {
-                //System.Drawing.Color pixelColor = ParentWindow.screenSource.getPixel(15, pixel);
-                //debText += "\nHorP - " + pixel + ":15 = R: " + pixelColor.R + ", G: " + pixelColor.G + ", B: " + pixelColor.B;
+                System.Drawing.Color pixelColor = ParentWindow.screenSource.getBottom(pixel);
+                debText3 += "\nHorP - " + pixel + ":15 = R: " + pixelColor.R + ", G: " + pixelColor.G + ", B: " + pixelColor.B;
             }
-
-            debugText.Text = debText;
+            debugText3.Text = debText3;
 
         }
 
