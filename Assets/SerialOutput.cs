@@ -44,29 +44,39 @@ namespace Aurora.Assets
         {
             byte[] message;
 
-            //3 - wellcome, 1 - direction, 1 - mode, 1 - led count 128 * 3 (384)
-            message = new byte[3 + 1 + 1 + 1 + (128 * 3)];
+            //3 - wellcome,  1 - mode, 128 * 3 - led count  (384)
+            message = new byte[3 + 1 + (128 * 3)];
 
             //Preamble
             message[0] = 0x00;
             message[1] = 0x01;
             message[2] = 0x02;
 
-            //Direction
-            message[3] = ledDir;
-
             //Mode
-            message[4] = 0x00;
+            message[3] = 0x00;
 
-            //Led Count
-            message[5] = 0x14;
-
-            int counter = 3 + 1 + 1 + 1;
+            int counter = 3;
             for (int i = 0; i < 128; i++)
             {
-                message[counter++] = 0x00; //RED
-                message[counter++] = 0xFF; //GREEN
-                message[counter++] = 0xFF; //BLUE
+                if(i <= 5)
+                {
+                    message[counter++] = 0x00; //RED
+                    message[counter++] = 0x00; //GREEN
+                    message[counter++] = 0xFF; //BLUE
+                }
+                else if(i <= 10)
+                {
+                    message[counter++] = 0x00; //RED
+                    message[counter++] = 0xFF; //GREEN
+                    message[counter++] = 0x00; //BLUE
+                }
+                else
+                {
+                    message[counter++] = 0xFF; //RED
+                    message[counter++] = 0x00; //GREEN
+                    message[counter++] = 0x00; //BLUE
+                }
+
             }
 
             return message;

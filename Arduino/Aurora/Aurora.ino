@@ -1,10 +1,10 @@
 #include "FastLED.h"
 
-// 3 wellcome, 1 direction, 1 mode, 1 led count 128 * 3 (384) led
-#define BUFFER_SIZE 3 + 1 + 1 + 1 + (128 * 3)
+//3 - wellcome,  1 - mode, 128 * 3 - led count  (384)
+#define BUFFER_SIZE 3 + 1 + (128 * 3)
 
 #define LED_PIN 2
-#define SAMPLE_LEDS 20
+
 #define STATUS_CONNECTED 1
 #define STATUS_DISCONNECTED 0
 
@@ -47,12 +47,12 @@ void fetchData()
     Serial.readBytes(buffer, BUFFER_SIZE);
 
     int lds = 0;
-    int bufferOffset = (3 + 1 + 1 + 1);
+    int bufferOffset = 3;
     for (int i = 0; i < 128; ++i)
     {
       totalLeds[lds++] = CRGB(buffer[bufferOffset++], buffer[bufferOffset++], buffer[bufferOffset++]);
     }
-
+    FastLED.delay(100);
     FastLED.show();
   }
   else
@@ -92,12 +92,12 @@ void rainbowFill()
 {
   ledIndex++;
   uint8_t colorIndex = ledIndex;
-  for( int i = 0; i < SAMPLE_LEDS; i++) {
+  for( int i = 0; i < 128; i++) {
     totalLeds[i] = ColorFromPalette(RainbowColors_p, colorIndex, 50, LINEARBLEND);
     colorIndex += 3;
   }
 
-  FastLED.delay(50);
+  FastLED.delay(10);
 
   if (Serial.available() > 0)
   {
