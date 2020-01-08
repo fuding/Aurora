@@ -22,8 +22,25 @@
             <TextBlock x:Name="scInfo"  Text=""/>
             <TextBlock x:Name="pixelInfo" Text=""/>
         </StackPanel>
-        <StackPanel Grid.Row="1">
-            <TextBlock TextAlignment="Right" x:Name="tickRateText" Text="Ticks: 0"/>
-        </StackPanel>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                <Button Name="ButtonAction" Style="{StaticResource FlatButton}">
+                    <TextBlock Margin="10" Text="Start"/>
+                </Button>
+                <Button Name="ButtonCalibration" Style="{StaticResource FlatButton}">
+                    <TextBlock Margin="10" Text="Calibration"/>
+                </Button>
+                <Button Name="ButtonSettings" Style="{StaticResource FlatButton}">
+                    <TextBlock Margin="10" Text="Settings"/>
+                </Button>
+            </StackPanel>
+            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                <TextBlock TextAlignment="Right" x:Name="tickRateText" Text="Ticks: 0"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
