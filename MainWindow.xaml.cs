@@ -52,7 +52,6 @@ namespace Aurora
         {
             if (WindowState == System.Windows.WindowState.Minimized)
                 this.Hide();
-
             base.OnStateChanged(e);
         }
 
@@ -74,8 +73,17 @@ namespace Aurora
                       {
                           tickRateText.Text = "Ticks: " + counter;
 
-                          System.Drawing.Color pixel = screenSource.getPixel(100, 100);
+                          System.Drawing.Color pixel1 = screenSource.getPixel(100, 100);
                           System.Drawing.Color pixel2 = screenSource.getPixel(500, 500);
+                          System.Drawing.Color pixel3 = screenSource.getPixel(1000, 1000);
+                          System.Drawing.Color pixel4 = screenSource.getPixel(screenSource.getWidth() - 1, screenSource.getHeight() - 1);
+
+                          string pixels = "\n\nSample Pixels info\n";
+                          pixels += "\nPixel 100x100: R: " + pixel1.R + ", G: " + pixel1.G + ", B: " + pixel1.B;
+                          pixels += "\nPixel 500x500: R: " + pixel2.R + ", G: " + pixel2.G + ", B: " + pixel2.B;
+                          pixels += "\nPixel 1000x1000: R: " + pixel3.R + ", G: " + pixel3.G + ", B: " + pixel3.B;
+                          pixels += "\nPixel " + screenSource.getWidth() + ":" + screenSource.getHeight() + ": R: " + pixel4.R + ", G: " + pixel4.G + ", B: " + pixel4.B;
+                          pixelInfo.Text = pixels;
 
                           //scWidth.Text = "Pixel from 100 x 100 have color: R:" + pixel.R + ", G: " + pixel.G + ", B: " + pixel.B;
                           //scHeight.Text = "Pixel from 500 x 500 have color: R:" + pixel2.R + ", G: " + pixel2.G + ", B: " + pixel2.B;
