@@ -32,6 +32,7 @@ namespace Aurora
 
         int view = 0;
         int tickRate = 200;
+        int status = 0;
         public MainWindow()
         {
             screenSource = new ScreenColor();
@@ -82,12 +83,14 @@ namespace Aurora
                       {
                           tickRateText.Text = "Ticks: " + counter;
 
+                          System.Drawing.Color pixel0 = screenSource.getPixel(1, 1); 
                           System.Drawing.Color pixel1 = screenSource.getPixel(100, 100);
                           System.Drawing.Color pixel2 = screenSource.getPixel(500, 500);
                           System.Drawing.Color pixel3 = screenSource.getPixel(1000, 1000);
                           System.Drawing.Color pixel4 = screenSource.getPixel(screenSource.getWidth() - 1, screenSource.getHeight() - 1);
 
                           string pixels = "\n\nSample Pixels info\n";
+                          pixels += "\nPixel 1x1: R: " + pixel0.R + ", G: " + pixel0.G + ", B: " + pixel0.B;
                           pixels += "\nPixel 100x100: R: " + pixel1.R + ", G: " + pixel1.G + ", B: " + pixel1.B;
                           pixels += "\nPixel 500x500: R: " + pixel2.R + ", G: " + pixel2.G + ", B: " + pixel2.B;
                           pixels += "\nPixel 1000x1000: R: " + pixel3.R + ", G: " + pixel3.G + ", B: " + pixel3.B;
@@ -108,6 +111,22 @@ namespace Aurora
               }
             );
         }
+        private void ButtonAction_Click(object sender, RoutedEventArgs e)
+        {
+            if (view == 0)
+            {
+                if (status == 0)
+                {
+                    status = 1;
+                    Button1Title.Text = "Stop";
+                }
+                else
+                {
+                    status = 0;
+                    Button1Title.Text = "Start";
+                }
+            }
+        }
 
         private void ButtonSettings_Click(object sender, RoutedEventArgs e)
         {
@@ -115,7 +134,7 @@ namespace Aurora
             {
                 view = 0;
                 ButtonSettings.Visibility = Visibility.Visible;
-                Button1Title.Text = "Start";
+                Button1Title.Text = (status == 1 ? "Stop" : "Start");
                 Button2Title.Text = "Calibration";
                 Button3Title.Text = "Settings";
                 Panel.Clear();
@@ -136,11 +155,11 @@ namespace Aurora
         private void ButtonCalibration_Click(object sender, RoutedEventArgs e)
         {
             
-            if (view == 1 || view == 2)
+            if (view == 2)
             {
                 view = 0;
                 ButtonSettings.Visibility = Visibility.Visible;
-                Button1Title.Text = "Start";
+                Button1Title.Text = (status == 1 ? "Stop" : "Start");
                 Button2Title.Text = "Calibration";
                 Button3Title.Text = "Settings";
                 Panel.Clear();

@@ -27,7 +27,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Orientation="Horizontal">
-                <Button Name="ButtonAction" Style="{StaticResource FlatButton}">
+                <Button Name="ButtonAction" Style="{StaticResource FlatButton}" Click="ButtonAction_Click">
                     <TextBlock x:Name="Button1Title" Margin="10" Text="Start"/>
                 </Button>
                 <Button Name="ButtonCalibration" Style="{StaticResource FlatButton}" Click="ButtonCalibration_Click">
