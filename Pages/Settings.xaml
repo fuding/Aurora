@@ -10,30 +10,30 @@
             <TextBlock Text="Settings" FontSize="20"/>
             
             <TextBlock Text="Number of top/bottom LEDs" Margin="0,15,0,0"/>
-            <TextBox Style="{StaticResource FlatInput}" Text="18"></TextBox>
+            <TextBox x:Name="top_led" Style="{StaticResource FlatInput}"></TextBox>
 
             <TextBlock Text="Number of left/right LEDs" Margin="0,15,0,0"/>
-            <TextBox Style="{StaticResource FlatInput}" Text="12"></TextBox>
+            <TextBox x:Name="side_led" Style="{StaticResource FlatInput}"></TextBox>
 
             <TextBlock Text="LEDs direction" Margin="0,15,0,0"/>
-            <ComboBox>
-                <ComboBoxItem>Left</ComboBoxItem>
-                <ComboBoxItem IsSelected="True">Right</ComboBoxItem>
+            <ComboBox x:Name="led_dir">
+                <ComboBoxItem Tag="left">Left</ComboBoxItem>
+                <ComboBoxItem Tag="right">Right</ComboBoxItem>
             </ComboBox>
             
             <TextBlock Text="Where does the signal source come from?" Margin="0,15,0,0"/>
-            <ComboBox>
-                <ComboBoxItem IsSelected="True">Top</ComboBoxItem>
+            <ComboBox x:Name="led_input">
+                <ComboBoxItem>Top</ComboBoxItem>
                 <ComboBoxItem>Bottom</ComboBoxItem>
                 <ComboBoxItem>Left</ComboBoxItem>
                 <ComboBoxItem>Right</ComboBoxItem>
             </ComboBox>
 
             <TextBlock Text="Which strips are connected?" Margin="0,15,0,0"/>
-            <CheckBox x:Name="cb1" IsChecked="True" Style="{StaticResource FlatCheckbox}" Content="Left stripe" />
-            <CheckBox x:Name="cb2" IsChecked="True" Style="{StaticResource FlatCheckbox}" Content="Right stripe" />
-            <CheckBox x:Name="cb3" IsChecked="True" Style="{StaticResource FlatCheckbox}" Content="Top stripe" />
-            <CheckBox x:Name="cb4" IsChecked="True" Style="{StaticResource FlatCheckbox}" Content="Bottom stripe" />
+            <CheckBox x:Name="cb1" Style="{StaticResource FlatCheckbox}" Content="Left stripe" />
+            <CheckBox x:Name="cb2" Style="{StaticResource FlatCheckbox}" Content="Right stripe" />
+            <CheckBox x:Name="cb3" Style="{StaticResource FlatCheckbox}" Content="Top stripe" />
+            <CheckBox x:Name="cb4" Style="{StaticResource FlatCheckbox}" Content="Bottom stripe" />
         </StackPanel>
     </Grid>
 </UserControl>

@@ -111,6 +111,18 @@ namespace Aurora
               }
             );
         }
+
+        private void showDashboard()
+        {
+            view = 0;
+            ButtonSettings.Visibility = Visibility.Visible;
+            Button1Title.Text = (status == 1 ? "Stop" : "Start");
+            Button2Title.Text = "Calibration";
+            Button3Title.Text = "Settings";
+            Panel.Clear();
+            Panel.Add(Dashboard);
+        }
+
         private void ButtonAction_Click(object sender, RoutedEventArgs e)
         {
             if (view == 0)
@@ -125,6 +137,22 @@ namespace Aurora
                     status = 0;
                     Button1Title.Text = "Start";
                 }
+            }else if(view == 2)
+            {
+                Properties.Settings.Default.led_dir = Settings.getLedDir();
+                Properties.Settings.Default.led_input = Settings.getLedInput();
+
+                Properties.Settings.Default.top_led = Settings.getTopLedCount();
+                Properties.Settings.Default.side_led = Settings.getSideLedCount();
+
+                Properties.Settings.Default.active_left = Settings.getActiveBars()[0];
+                Properties.Settings.Default.active_right = Settings.getActiveBars()[1];
+                Properties.Settings.Default.active_top = Settings.getActiveBars()[2];
+                Properties.Settings.Default.active_bottom = Settings.getActiveBars()[3];
+
+                Properties.Settings.Default.Save();
+
+                showDashboard();
             }
         }
 
@@ -132,13 +160,7 @@ namespace Aurora
         {
             if(view == 1)
             {
-                view = 0;
-                ButtonSettings.Visibility = Visibility.Visible;
-                Button1Title.Text = (status == 1 ? "Stop" : "Start");
-                Button2Title.Text = "Calibration";
-                Button3Title.Text = "Settings";
-                Panel.Clear();
-                Panel.Add(Dashboard);
+                showDashboard();
             }
             else
             {
@@ -157,13 +179,7 @@ namespace Aurora
             
             if (view == 2)
             {
-                view = 0;
-                ButtonSettings.Visibility = Visibility.Visible;
-                Button1Title.Text = (status == 1 ? "Stop" : "Start");
-                Button2Title.Text = "Calibration";
-                Button3Title.Text = "Settings";
-                Panel.Clear();
-                Panel.Add(Dashboard);
+                showDashboard();
             }
             else
             {
