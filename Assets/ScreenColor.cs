@@ -10,7 +10,7 @@ using System.Windows.Media.Imaging;
 
 namespace Aurora.Assets
 {
-    class ScreenColor
+    public class ScreenColor
     {
         Bitmap bitmap_screen;
         Graphics graphic_screen;

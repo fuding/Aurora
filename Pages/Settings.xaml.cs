@@ -81,7 +81,8 @@ namespace Aurora.Pages
         }
         private void handleComboChange()
         {
-            selectedPort = serial_port.SelectedItem.ToString();
+            //Shit dunno work
+            //selectedPort = serial_port.SelectedItem.ToString();
         }
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)

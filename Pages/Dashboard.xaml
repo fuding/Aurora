@@ -12,6 +12,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <StackPanel Grid.Row="0">
+                <TextBlock Text="Dashboard" FontSize="20"/>
                 <TextBlock x:Name="scInfo"  Text=""/>
                 <TextBlock x:Name="pixelInfo" Text=""/>
                 <TextBlock x:Name="portsText" Text="" Margin="0,20,0,0"/>
@@ -24,7 +25,7 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Orientation="Horizontal">
                 <Button Style="{StaticResource FlatButton}" Click="ButtonAction_Click">
-                    <TextBlock Margin="10" Text="Start"/>
+                    <TextBlock x:Name="statusText" Margin="10" Text="Start service"/>
                 </Button>
                 <Button Style="{StaticResource FlatButton}" Click="ButtonCalibration_Click">
                     <TextBlock Margin="10" Text="Calibration"/>
@@ -34,7 +35,7 @@
                 </Button>
             </StackPanel>
             <StackPanel Grid.Column="1" VerticalAlignment="Bottom">
-                <TextBlock TextAlignment="Right" x:Name="tickRateText" Text="Ticks: 0"/>
+                <TextBlock TextAlignment="Right" x:Name="ticksCount" Text="Ticks: 0"/>
             </StackPanel>
         </Grid>
     </Grid>
