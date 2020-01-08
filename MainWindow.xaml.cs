@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Forms;
 using Aurora.Assets;
+using Aurora.Pages;
 
 namespace Aurora
 {
@@ -24,16 +25,25 @@ namespace Aurora
     public partial class MainWindow : Window
     {
         ScreenColor screenSource;
+        UIElementCollection Panel;
+        Dashboard Dashboard = new Dashboard();
+        Calibration Calibration = new Calibration();
+        Settings Settings = new Settings();
 
+        int view = 0;
         int tickRate = 200;
         public MainWindow()
         {
-            InitializeComponent();
-            Tray();
-
             screenSource = new ScreenColor();
 
-            scInfo.Text = "Screen width: " + screenSource.getWidth() + "\nScreen Height: " + screenSource.getHeight();
+            Dashboard.changeInfo("Screen width: " + screenSource.getWidth() + "\nScreen Height: " + screenSource.getHeight());
+            
+            InitializeComponent();
+            Panel = PagePanel.Children;
+
+            Panel.Add(Dashboard);
+
+            Tray();
             AsyncScreenshot();
         }
         private void Tray()
@@ -82,7 +92,13 @@ namespace Aurora
                           pixels += "\nPixel 500x500: R: " + pixel2.R + ", G: " + pixel2.G + ", B: " + pixel2.B;
                           pixels += "\nPixel 1000x1000: R: " + pixel3.R + ", G: " + pixel3.G + ", B: " + pixel3.B;
                           pixels += "\nPixel " + screenSource.getWidth() + ":" + screenSource.getHeight() + ": R: " + pixel4.R + ", G: " + pixel4.G + ", B: " + pixel4.B;
-                          pixelInfo.Text = pixels;
+
+                          if(view == 0)
+                          {
+                              Dashboard.changePixel(pixels);
+                              Panel.Clear();
+                              Panel.Add(Dashboard);
+                          }
 
                           //scWidth.Text = "Pixel from 100 x 100 have color: R:" + pixel.R + ", G: " + pixel.G + ", B: " + pixel.B;
                           //scHeight.Text = "Pixel from 500 x 500 have color: R:" + pixel2.R + ", G: " + pixel2.G + ", B: " + pixel2.B;
@@ -91,6 +107,38 @@ namespace Aurora
                   }
               }
             );
+        }
+
+        private void ButtonSettings_Click(object sender, RoutedEventArgs e)
+        {
+            if(view == 2)
+            {
+                view = 0;
+                Panel.Add(Dashboard);
+            }
+            else
+            {
+                view = 2;
+                Panel.Clear();
+                Panel.Add(Settings);
+            }
+            
+        }
+
+        private void ButtonCalibration_Click(object sender, RoutedEventArgs e)
+        {
+            
+            if (view == 1)
+            {
+                view = 0;
+                Panel.Add(Dashboard);
+            }
+            else
+            {
+                view = 1;
+                Panel.Clear();
+                Panel.Add(Calibration);
+            }
         }
     }
 }
