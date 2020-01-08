@@ -31,6 +31,7 @@ namespace Aurora
         public int tickRate = 150;
         public int ticks = 0;
         public bool status = false;
+        public bool lockview = false;
 
         public MainWindow()
         {
@@ -85,12 +86,15 @@ namespace Aurora
                               //SerialOutput serial = new SerialOutput();
                               //serial.Send();
 
-                              //Refresh ticks
-                              ticksCount.Text = "Ticks: " + ticks.ToString();
+                              if (!lockview)
+                              {
+                                  //Refresh ticks
+                                  ticksCount.Text = "Ticks: " + ticks.ToString();
 
-                              //Refresh preview on dashboard
-                              Panel.Clear();
-                              Panel.Add(new Dashboard());
+                                  //Refresh preview on dashboard
+                                  Panel.Clear();
+                                  Panel.Add(new Dashboard());
+                              }
                           });
                       }
                       System.Threading.Thread.Sleep(tickRate);
@@ -113,19 +117,31 @@ namespace Aurora
             }
         }
 
-        private void ButtonCalibration_Click(object sender, RoutedEventArgs e)
+        private void clearPanel()
         {
+            lockview = true;
             Panel.Clear();
             HomeNavigation.Visibility = Visibility.Hidden;
             HomeNavigation.Height = 0;
+        }
+
+        public void showMenu()
+        {
+            lockview = false;
+            Panel.Clear();
+            HomeNavigation.Visibility = Visibility.Visible;
+            HomeNavigation.Height = Double.NaN;
+        }
+
+        private void ButtonCalibration_Click(object sender, RoutedEventArgs e)
+        {
+            clearPanel();
             Panel.Add(new Calibration());
         }
 
         private void ButtonSettings_Click(object sender, RoutedEventArgs e)
         {
-            Panel.Clear();
-            HomeNavigation.Visibility = Visibility.Hidden;
-            HomeNavigation.Height = 0;
+            clearPanel();
             Panel.Add(new Settings());
         }
     }

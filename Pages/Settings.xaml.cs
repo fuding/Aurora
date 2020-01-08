@@ -108,16 +108,12 @@ namespace Aurora.Pages
 
             Properties.Settings.Default.Save();
 
-            ParentWindow.Panel.Clear();
-            ParentWindow.HomeNavigation.Height = Double.NaN;
-            ParentWindow.HomeNavigation.Visibility = Visibility.Visible;
+            ParentWindow.showMenu();
             ParentWindow.Panel.Add(new Dashboard());
         }
         private void ButtonCancel_Click(object sender, RoutedEventArgs e)
         {
-            ParentWindow.Panel.Clear();
-            ParentWindow.HomeNavigation.Height = Double.NaN;
-            ParentWindow.HomeNavigation.Visibility = Visibility.Visible;
+            ParentWindow.showMenu();
             ParentWindow.Panel.Add(new Dashboard());
         }
     }
