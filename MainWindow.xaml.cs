@@ -45,6 +45,9 @@ namespace Aurora
             Panel.Add(new Dashboard());
 
             AsyncScreenshot();
+
+            //Ram usage
+            ramUsage.Text = "RAM Usage: " + (currentProc.PrivateMemorySize64 / 1024 / 1024).ToString() + "MB";
         }
         private void Tray()
         {
@@ -102,6 +105,7 @@ namespace Aurora
                                   ticksCount.Text = "Ticks: " + ticks.ToString();
 
                                   //Ram usage
+                                  currentProc = Process.GetCurrentProcess();
                                   ramUsage.Text = "RAM Usage: " + (currentProc.PrivateMemorySize64 / 1024 / 1024).ToString() + "MB";
 
                                   //Refresh preview on dashboard

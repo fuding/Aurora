@@ -54,9 +54,7 @@ namespace Aurora.Pages
             serial_port.ItemsSource = null;
             serial_port.Items.Clear();
 
-            string[] portsList = { "No port selected" };
-            //string[] portsList = { };
-            portsList = portsList.Concat(SerialPort.GetPortNames()).ToArray();
+            string[] portsList = SerialPort.GetPortNames();
 
             foreach(string port in portsList)
             {
@@ -82,7 +80,7 @@ namespace Aurora.Pages
         private void handleComboChange()
         {
             //Shit dunno work
-            //selectedPort = serial_port.SelectedItem.ToString();
+            selectedPort = serial_port.SelectedItem.ToString();
         }
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
