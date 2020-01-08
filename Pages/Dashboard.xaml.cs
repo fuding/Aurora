@@ -26,14 +26,6 @@ namespace Aurora.Pages
         public Dashboard()
         {
             InitializeComponent();
-
-            if (ParentWindow.status == true)
-                statusText.Text = "Stop service";
-            else
-                statusText.Text = "Start service";
-
-            ticksCount.Text = "Ticks: " + ParentWindow.ticks.ToString();
-
             Preview();
         }
 
@@ -79,32 +71,6 @@ namespace Aurora.Pages
             }
             debugText3.Text = debText3;
 
-        }
-
-        private void ButtonAction_Click(object sender, RoutedEventArgs e)
-        {
-            if (ParentWindow.status == false)
-            {
-                ParentWindow.status = true;
-                //statusText.Text = "Stop service";
-            }
-            else
-            {
-                ParentWindow.status = false;
-                //statusText.Text = "Start service";
-            }
-        }
-
-        private void ButtonCalibration_Click(object sender, RoutedEventArgs e)
-        {
-            ParentWindow.Panel.Clear();
-            ParentWindow.Panel.Add(new Calibration());
-        }
-
-        private void ButtonSettings_Click(object sender, RoutedEventArgs e)
-        {
-            ParentWindow.Panel.Clear();
-            ParentWindow.Panel.Add(new Settings());
         }
     }
 }

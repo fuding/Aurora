@@ -37,6 +37,8 @@ namespace Aurora.Pages
         private void ButtonCancel_Click(object sender, RoutedEventArgs e)
         {
             ParentWindow.Panel.Clear();
+            ParentWindow.HomeNavigation.Height = Double.NaN;
+            ParentWindow.HomeNavigation.Visibility = Visibility.Visible;
             ParentWindow.Panel.Add(new Dashboard());
         }
     }

@@ -7,53 +7,27 @@
              mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0">
-                <TextBlock Text="Dashboard" FontSize="20"/>
-            </StackPanel>
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <ScrollViewer Grid.Column="0" Margin="20,0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                    <TextBlock x:Name="debugText1"  TextWrapping="Wrap" Text="" />
-                </ScrollViewer>
-                <ScrollViewer Grid.Column="1" Margin="20,0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                    <TextBlock x:Name="debugText2"  TextWrapping="Wrap" Text="" />
-                </ScrollViewer>
-                <ScrollViewer Grid.Column="2" Margin="20,0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                    <TextBlock x:Name="debugText3"  TextWrapping="Wrap" Text="" />
-                </ScrollViewer>
-            </Grid>
-        </Grid>
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="Dashboard" FontSize="20"/>
+        </StackPanel>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0" Orientation="Horizontal">
-                <Button Style="{StaticResource FlatButton}" Click="ButtonAction_Click">
-                    <TextBlock x:Name="statusText" Margin="10" Text="Start service"/>
-                </Button>
-                <Button Style="{StaticResource FlatButton}" Click="ButtonCalibration_Click">
-                    <TextBlock Margin="10" Text="Calibration"/>
-                </Button>
-                <Button Style="{StaticResource FlatButton}" Click="ButtonSettings_Click">
-                    <TextBlock Margin="10" Text="Settings"/>
-                </Button>
-            </StackPanel>
-            <StackPanel Grid.Column="1" VerticalAlignment="Bottom">
-                <TextBlock TextAlignment="Right" x:Name="ticksCount" Text="Ticks: 0"/>
-            </StackPanel>
+            <ScrollViewer Grid.Column="0" Margin="20,0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                <TextBlock x:Name="debugText1"  TextWrapping="Wrap" Text="" />
+            </ScrollViewer>
+            <ScrollViewer Grid.Column="1" Margin="20,0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                <TextBlock x:Name="debugText2"  TextWrapping="Wrap" Text="" />
+            </ScrollViewer>
+            <ScrollViewer Grid.Column="2" Margin="20,0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                <TextBlock x:Name="debugText3"  TextWrapping="Wrap" Text="" />
+            </ScrollViewer>
         </Grid>
     </Grid>
 </UserControl>

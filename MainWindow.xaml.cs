@@ -82,8 +82,11 @@ namespace Aurora
                           System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, refreshAction);
                           this.Dispatcher.Invoke(() =>
                           {
-                              SerialOutput serial = new SerialOutput();
-                              serial.Send();
+                              //SerialOutput serial = new SerialOutput();
+                              //serial.Send();
+
+                              //Refresh ticks
+                              ticksCount.Text = "Ticks: " + ticks.ToString();
 
                               //Refresh preview on dashboard
                               Panel.Clear();
@@ -94,6 +97,36 @@ namespace Aurora
                   }
               }
             );
+        }
+
+        private void ButtonAction_Click(object sender, RoutedEventArgs e)
+        {
+            if (status == false)
+            {
+                status = true;
+                statusText.Text = "Stop service";
+            }
+            else
+            {
+                status = false;
+                statusText.Text = "Start service";
+            }
+        }
+
+        private void ButtonCalibration_Click(object sender, RoutedEventArgs e)
+        {
+            Panel.Clear();
+            HomeNavigation.Visibility = Visibility.Hidden;
+            HomeNavigation.Height = 0;
+            Panel.Add(new Calibration());
+        }
+
+        private void ButtonSettings_Click(object sender, RoutedEventArgs e)
+        {
+            Panel.Clear();
+            HomeNavigation.Visibility = Visibility.Hidden;
+            HomeNavigation.Height = 0;
+            Panel.Add(new Settings());
         }
     }
 }
