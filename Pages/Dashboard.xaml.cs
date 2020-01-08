@@ -35,11 +35,15 @@ namespace Aurora.Pages
             ticksCount.Text = "Ticks: " + ParentWindow.ticks.ToString();
 
             Preview();
+
+            ParentWindow.screenSource.Refresh();
+            DEBUGIMAGE.Source = ParentWindow.screenSource.debugPreview();
         }
 
         private void Preview()
         {
-            int[,] pixelArray;
+            List<int> horizontalPixelArray = new List<int> { };
+            List<int> verticalPixelArray = new List<int> { };
 
             int screenW = ParentWindow.screenSource.getWidth();
             int screenH = ParentWindow.screenSource.getHeight();
@@ -47,23 +51,35 @@ namespace Aurora.Pages
             int pixelDistanceW = screenW / Properties.Settings.Default.top_led;
             int pixelDistanceH = screenH / Properties.Settings.Default.side_led;
 
-            portsText.Text = "Dystans pixeli w poziomie: " + pixelDistanceW.ToString() + "\nDystans pixeli w pionie: " + pixelDistanceH.ToString();
+            int currentPixel = 0;
+            for (int i = 0; i < Properties.Settings.Default.top_led; i++)
+            {
+                horizontalPixelArray.Add(currentPixel += pixelDistanceW);
+            }
 
+            currentPixel = 0;
+            for (int i = 0; i < Properties.Settings.Default.top_led; i++)
+            {
+                if(currentPixel + pixelDistanceW < screenW)
+                    verticalPixelArray.Add(currentPixel += pixelDistanceW);
+            }
 
-            System.Drawing.Color pixel0 = ParentWindow.screenSource.getPixel(1, 1);
-            System.Drawing.Color pixel1 = ParentWindow.screenSource.getPixel(100, 100);
-            System.Drawing.Color pixel2 = ParentWindow.screenSource.getPixel(500, 500);
-            System.Drawing.Color pixel3 = ParentWindow.screenSource.getPixel(1000, 1000);
-            System.Drawing.Color pixel4 = ParentWindow.screenSource.getPixel(ParentWindow.screenSource.getWidth() - 1, ParentWindow.screenSource.getHeight() - 1);
+            string debText = "Resolution: " + screenW + "/" + screenH + "\nDystans pixeli w poziomie: " + pixelDistanceW.ToString() + "\nDystans pixeli w pionie: " + pixelDistanceH.ToString();
 
-            string pixels = "\n\nSample Pixels info\n";
-            pixels += "\nPixel 1x1: R: " + pixel0.R + ", G: " + pixel0.G + ", B: " + pixel0.B;
-            pixels += "\nPixel 100x100: R: " + pixel1.R + ", G: " + pixel1.G + ", B: " + pixel1.B;
-            pixels += "\nPixel 500x500: R: " + pixel2.R + ", G: " + pixel2.G + ", B: " + pixel2.B;
-            pixels += "\nPixel 1000x1000: R: " + pixel3.R + ", G: " + pixel3.G + ", B: " + pixel3.B;
-            pixels += "\nPixel " + ParentWindow.screenSource.getWidth() + ":" + ParentWindow.screenSource.getHeight() + ": R: " + pixel4.R + ", G: " + pixel4.G + ", B: " + pixel4.B;
+            debText += "\n\nLista pixeli\n";
+            foreach (int pixel in horizontalPixelArray)
+            {
+                System.Drawing.Color pixelColor = ParentWindow.screenSource.getTop(pixel);
+                debText += "\nHorP - " + pixel + ":" + pixelDistanceH + " = R: " + pixelColor.R + ", G: " + pixelColor.G + ", B: " + pixelColor.B;
+            }
 
-            pixelInfo.Text = pixels;
+            foreach (int pixel in verticalPixelArray)
+            {
+                //System.Drawing.Color pixelColor = ParentWindow.screenSource.getPixel(15, pixel);
+                //debText += "\nHorP - " + pixel + ":15 = R: " + pixelColor.R + ", G: " + pixelColor.G + ", B: " + pixelColor.B;
+            }
+
+            debugText.Text = debText;
 
         }
 

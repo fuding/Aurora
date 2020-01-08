@@ -28,7 +28,7 @@ namespace Aurora
 
         public UIElementCollection Panel;
         public ScreenColor screenSource = new ScreenColor();
-        public int tickRate = 200;
+        public int tickRate = 250;
         public int ticks = 0;
         public bool status = false;
 
@@ -70,7 +70,7 @@ namespace Aurora
               {
                   Action refreshAction = delegate
                   {
-                      screenSource.Refresh();
+                      //screenSource.Refresh();
                       ticks++;
                   };
                   while (true)
@@ -80,6 +80,9 @@ namespace Aurora
                           System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, refreshAction);
                           this.Dispatcher.Invoke(() =>
                           {
+                              SerialOutput serial = new SerialOutput();
+                              serial.Send();
+
                               //Refresh preview on dashboard
                               Panel.Clear();
                               Panel.Add(new Dashboard());

@@ -12,27 +12,53 @@ namespace Aurora.Assets
 {
     public class ScreenColor
     {
-        Bitmap bitmap_screen;
-        Graphics graphic_screen;
 
         int screenWidth = 0;
         int screenHeight = 0;
 
+        Bitmap[] bmp_map = new Bitmap[4];
+
         [DllImport("gdi32.dll", EntryPoint = "DeleteObject")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool DeleteObject([In] IntPtr hObject);
+        public ImageSource debugPreview()
+        {
+            IntPtr handle = bmp_map[0].GetHbitmap();
+            try
+            {
+                return Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            }
+            finally { DeleteObject(handle); }
+        }
 
         public ScreenColor()
         {
             screenWidth = Screen.PrimaryScreen.Bounds.Width;
             screenHeight = Screen.PrimaryScreen.Bounds.Height;
 
-            this.takeScreenshot();
+            bmp_map[0] = new Bitmap(screenWidth, 1, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            bmp_map[1] = new Bitmap(screenWidth, 1, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            bmp_map[2] = new Bitmap(1, screenHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            bmp_map[3] = new Bitmap(1, screenHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
         }
 
         public void Refresh()
         {
-            this.takeScreenshot();
+            refreshTop();
+        }
+
+        public void refreshTop(int offset = 15)
+        {
+            Graphics gfx = Graphics.FromImage(bmp_map[0]);
+            gfx.CopyFromScreen(0, offset, 0, 0, Screen.PrimaryScreen.Bounds.Size, CopyPixelOperation.SourceCopy);
+            MemoryStream msIn = new MemoryStream();
+            bmp_map[0].Save(msIn, System.Drawing.Imaging.ImageCodecInfo.GetImageEncoders()[0], null);
+        }
+
+        public System.Drawing.Color getTop(int position = 1)
+        {
+            return bmp_map[0].GetPixel(position, 0);
         }
 
         public int getHeight()
@@ -44,31 +70,5 @@ namespace Aurora.Assets
         {
             return screenWidth;
         }
-
-        public System.Drawing.Color getPixel(int x = 1, int y = 1)
-        {
-            return bitmap_screen.GetPixel(x, y);
-        }
-
-        public ImageSource getPreview()
-        {
-            IntPtr handle = bitmap_screen.GetHbitmap();
-            try
-            {
-                return Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-            }
-            finally { DeleteObject(handle); }
-        }
-
-        private void takeScreenshot()
-        {
-            bitmap_screen = new Bitmap(screenWidth, screenHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            graphic_screen = Graphics.FromImage(bitmap_screen);
-            graphic_screen.CopyFromScreen(Screen.PrimaryScreen.Bounds.X, Screen.PrimaryScreen.Bounds.Y, 0, 0, Screen.PrimaryScreen.Bounds.Size, CopyPixelOperation.SourceCopy);
-            
-            MemoryStream msIn = new MemoryStream();
-            bitmap_screen.Save(msIn, System.Drawing.Imaging.ImageCodecInfo.GetImageEncoders()[0], null);
-        }
-
     }
 }
