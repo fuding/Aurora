@@ -111,32 +111,48 @@ namespace Aurora
 
         private void ButtonSettings_Click(object sender, RoutedEventArgs e)
         {
-            if(view == 2)
+            if(view == 1)
             {
                 view = 0;
+                ButtonSettings.Visibility = Visibility.Visible;
+                Button1Title.Text = "Start";
+                Button2Title.Text = "Calibration";
+                Button3Title.Text = "Settings";
+                Panel.Clear();
                 Panel.Add(Dashboard);
             }
             else
             {
                 view = 2;
+                ButtonSettings.Visibility = Visibility.Hidden;
+                Button1Title.Text = "Save";
+                Button2Title.Text = "Cancel";
                 Panel.Clear();
                 Panel.Add(Settings);
             }
-            
+
         }
 
         private void ButtonCalibration_Click(object sender, RoutedEventArgs e)
         {
             
-            if (view == 1)
+            if (view == 1 || view == 2)
             {
                 view = 0;
+                ButtonSettings.Visibility = Visibility.Visible;
+                Button1Title.Text = "Start";
+                Button2Title.Text = "Calibration";
+                Button3Title.Text = "Settings";
+                Panel.Clear();
                 Panel.Add(Dashboard);
             }
             else
             {
                 view = 1;
                 Panel.Clear();
+                Button1Title.Text = "Save";
+                Button2Title.Text = "Run calibration";
+                Button3Title.Text = "Cancel";
                 Panel.Add(Calibration);
             }
         }

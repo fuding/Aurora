@@ -28,13 +28,13 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Orientation="Horizontal">
                 <Button Name="ButtonAction" Style="{StaticResource FlatButton}">
-                    <TextBlock Margin="10" Text="Start"/>
+                    <TextBlock x:Name="Button1Title" Margin="10" Text="Start"/>
                 </Button>
                 <Button Name="ButtonCalibration" Style="{StaticResource FlatButton}" Click="ButtonCalibration_Click">
-                    <TextBlock Margin="10" Text="Calibration"/>
+                    <TextBlock x:Name="Button2Title" Margin="10" Text="Calibration"/>
                 </Button>
                 <Button Name="ButtonSettings" Style="{StaticResource FlatButton}" Click="ButtonSettings_Click">
-                    <TextBlock Margin="10" Text="Settings"/>
+                    <TextBlock x:Name="Button3Title" Margin="10" Text="Settings"/>
                 </Button>
             </StackPanel>
             <StackPanel Grid.Column="1" VerticalAlignment="Bottom">
