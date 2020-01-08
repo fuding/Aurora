@@ -14,11 +14,16 @@
         Foreground="#fff"
         WindowStartupLocation="CenterScreen">
     <Grid Margin="15">
-        <StackPanel>
-            <TextBlock x:Name="scTest"  Text=""/>
-            <TextBlock x:Name="scWidth"  Text="Screen Width: 2000"/>
-            <TextBlock x:Name="scHeight" Text="Screen Height: 2000"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <TextBlock x:Name="scInfo"  Text=""/>
+            <TextBlock x:Name="pixelInfo" Text=""/>
         </StackPanel>
-        <Image x:Name="scPreview"/>
+        <StackPanel Grid.Row="1">
+            <TextBlock TextAlignment="Right" x:Name="tickRateText" Text="Ticks: 0"/>
+        </StackPanel>
     </Grid>
 </Window>

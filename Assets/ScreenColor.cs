@@ -35,6 +35,16 @@ namespace Aurora.Assets
             this.takeScreenshot();
         }
 
+        public int getHeight()
+        {
+            return screenHeight;
+        }
+
+        public int getWidth()
+        {
+            return screenWidth;
+        }
+
         public System.Drawing.Color getPixel(int x = 1, int y = 1)
         {
             return bitmap_screen.GetPixel(x, y);
