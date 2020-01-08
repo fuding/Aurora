@@ -14,6 +14,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Management;
+using System.Runtime.InteropServices;
+using System.Windows.Interop;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Diagnostics;
 
 namespace Aurora.Pages
 {
@@ -27,10 +32,22 @@ namespace Aurora.Pages
         {
             InitializeComponent();
             Preview();
+
+            if(ParentWindow.status)
+            {
+                currentStatus.Text = "Enabled";
+            }
+            else
+            {
+                currentStatus.Text = "Disabled";
+            }
+
+            serialPort.Text = Properties.Settings.Default.serial_port;
         }
 
         private void Preview()
         {
+
             List<int> horizontalPixelArray = new List<int> { };
             List<int> verticalPixelArray = new List<int> { };
 
@@ -53,23 +70,26 @@ namespace Aurora.Pages
                     verticalPixelArray.Add(currentPixel += pixelDistanceW);
             }
 
-            debugText1.Text = "Resolution: " + screenW + "/" + screenH + "\nDystans pixeli w poziomie: " + pixelDistanceW.ToString() + "\nDystans pixeli w pionie: " + pixelDistanceH.ToString();
+            //debugText1.Text = "Resolution: " + screenW + "/" + screenH + "\nDystans pixeli w poziomie: " + pixelDistanceW.ToString() + "\nDystans pixeli w pionie: " + pixelDistanceH.ToString();
 
-            string debText2 = "\n\nHorizontal top pixels\n";
+            /*
             foreach (int pixel in horizontalPixelArray)
             {
                 System.Drawing.Color pixelColor = ParentWindow.screenSource.getTop(pixel);
+                topColor = pixelColor;
                 debText2 += "\nHorP - " + pixel + ":" + pixelDistanceH + " = R: " + pixelColor.R + ", G: " + pixelColor.G + ", B: " + pixelColor.B;
             }
-            debugText2.Text = debText2;
+            //debugText2.Text = debText2;
 
             string debText3 = "\n\nHorizontal bottom pixels\n";
             foreach (int pixel in verticalPixelArray)
             {
                 System.Drawing.Color pixelColor = ParentWindow.screenSource.getBottom(pixel);
+                bottomColor = pixelColor;
                 debText3 += "\nHorP - " + pixel + ":15 = R: " + pixelColor.R + ", G: " + pixelColor.G + ", B: " + pixelColor.B;
             }
-            debugText3.Text = debText3;
+            //debugText3.Text = debText3;
+            */
 
         }
     }

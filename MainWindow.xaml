@@ -36,8 +36,9 @@
                     <TextBlock Margin="10" Text="Settings"/>
                 </Button>
             </StackPanel>
-            <StackPanel Grid.Column="1" VerticalAlignment="Bottom">
-                <TextBlock TextAlignment="Right" x:Name="ticksCount" Text="Ticks: 0"/>
+            <StackPanel Grid.Column="1" VerticalAlignment="Bottom" Orientation="Horizontal">
+                <TextBlock x:Name="ramUsage" Text="RAM usage: 0MB" Margin="0,0,10,0" MinWidth="100"/>
+                <TextBlock x:Name="ticksCount" Text="Ticks: 0" MinWidth="50"/>
             </StackPanel>
         </Grid>
     </Grid>

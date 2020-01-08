@@ -16,6 +16,8 @@ using System.Windows.Shapes;
 using System.Windows.Forms;
 using Aurora.Assets;
 using Aurora.Pages;
+using System.ComponentModel;
+using System.Diagnostics;
 
 namespace Aurora
 {
@@ -28,6 +30,7 @@ namespace Aurora
 
         public UIElementCollection Panel;
         public ScreenColor screenSource = new ScreenColor();
+        Process currentProc = Process.GetCurrentProcess();
         public int tickRate = 150;
         public int ticks = 0;
         public bool status = false;
@@ -65,6 +68,13 @@ namespace Aurora
             base.OnStateChanged(e);
         }
 
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            status = false;
+            Environment.Exit(0);
+            base.OnClosing(e);
+        }
+
         private void AsyncScreenshot()
         {
             _ = Task.Factory.StartNew(() =>
@@ -90,6 +100,9 @@ namespace Aurora
                               {
                                   //Refresh ticks
                                   ticksCount.Text = "Ticks: " + ticks.ToString();
+
+                                  //Ram usage
+                                  ramUsage.Text = "RAM Usage: " + (currentProc.PrivateMemorySize64 / 1024 / 1024).ToString() + "MB";
 
                                   //Refresh preview on dashboard
                                   Panel.Clear();
