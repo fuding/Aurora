@@ -8,13 +8,32 @@
     <Grid>
         <StackPanel>
             <TextBlock Text="Settings" FontSize="20"/>
-            <TextBlock Text="Number of LEDs" Margin="0,15,0,0"/>
+            
+            <TextBlock Text="Number of top/bottom LEDs" Margin="0,15,0,0"/>
             <TextBox Style="{StaticResource FlatInput}"></TextBox>
+
+            <TextBlock Text="Number of left/right LEDs" Margin="0,15,0,0"/>
+            <TextBox Style="{StaticResource FlatInput}"></TextBox>
+
             <TextBlock Text="LEDs direction" Margin="0,15,0,0"/>
             <ComboBox>
                 <ComboBoxItem>Left</ComboBoxItem>
                 <ComboBoxItem IsSelected="True">Right</ComboBoxItem>
             </ComboBox>
+            
+            <TextBlock Text="Where does the signal source come from?" Margin="0,15,0,0"/>
+            <ComboBox>
+                <ComboBoxItem IsSelected="True">Top</ComboBoxItem>
+                <ComboBoxItem>Bottom</ComboBoxItem>
+                <ComboBoxItem>Left</ComboBoxItem>
+                <ComboBoxItem>Right</ComboBoxItem>
+            </ComboBox>
+
+            <TextBlock Text="Which strips are connected?" Margin="0,15,0,0"/>
+            <CheckBox x:Name="cb1" Style="{StaticResource FlatCheckbox}" Content="Left stripe" />
+            <CheckBox x:Name="cb2" Style="{StaticResource FlatCheckbox}" Content="Right stripe" />
+            <CheckBox x:Name="cb3" Style="{StaticResource FlatCheckbox}" Content="Top stripe" />
+            <CheckBox x:Name="cb4" Style="{StaticResource FlatCheckbox}" Content="Bottom stripe" />
         </StackPanel>
     </Grid>
 </UserControl>
