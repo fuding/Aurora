@@ -19,8 +19,6 @@ namespace Aurora.Pages
         {
             InitializeComponent();
             Preview();
-            DisplayStatus();
-
             fillLeds();
         }
 
@@ -34,14 +32,6 @@ namespace Aurora.Pages
                 ledlist.Add(new LedColor() { raw_color = ColorTranslator.ToHtml(pixel) });
 
             topledlist.ItemsSource = ledlist;
-        }
-
-        private void DisplayStatus()
-        {
-            if (ParentWindow.status)
-                currentStatus.Text = "Enabled";
-            else
-                currentStatus.Text = "Disabled";
         }
 
         private void Preview()

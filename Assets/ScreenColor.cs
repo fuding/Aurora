@@ -43,40 +43,18 @@ namespace Aurora.Assets
 
         public System.Drawing.Color[] getTopColors()
         {
-            //Led count
             System.Drawing.Color[] colors = new System.Drawing.Color[Properties.Settings.Default.top_led];
-
-            //Screen size without padding
-            int workWidth = screenWidth - (Properties.Settings.Default.top_padding * 2 );
-
-            //Current pixel position
             int currentPosition = Properties.Settings.Default.top_padding;
-
-            //Pixel multiplier
-            int pixelDistance = workWidth / Properties.Settings.Default.top_led;
+            int pixelDistance = (screenWidth - (Properties.Settings.Default.top_padding * 2)) / Properties.Settings.Default.top_led;
 
             for (int i = 0; i < Properties.Settings.Default.top_led; i++)
             {
-                
                 if(currentPosition >= screenWidth)
-                {
                     colors[i] = bmp_map[0].GetPixel(screenWidth - 1, 0);
-                }
                 else
-                {
                     colors[i] = bmp_map[0].GetPixel(currentPosition, 0);
                     currentPosition += pixelDistance;
-                }
             }
-
-            /* Debug
-            int cnt = 0;
-            foreach (System.Drawing.Color item in colors)
-            {
-                cnt++;
-                Console.WriteLine("=======================\nPOSITION\nCurrent position #" + cnt + ", R:" + item.R + ", G:" + item.G + ", B:" + item.B);
-            }
-            */
 
             return colors;
         }
