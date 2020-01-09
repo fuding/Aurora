@@ -1,0 +1,15 @@
+﻿<Window x:Class="Aurora.Pages.CalibrationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Aurora.Pages"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True"
+        Title="CalibrationWindow" Height="450" Width="800">
+    <Grid x:Name="MainCalibrationView" Background="#333">
+        <TextBlock Text="TEST KALIBRACJI"/>
+    </Grid>
+</Window>

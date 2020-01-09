@@ -21,7 +21,7 @@
                     <TextBlock Margin="10" Text="Save"/>
                 </Button>
                 <Button Style="{StaticResource FlatButton}" Click="ButtonCalibrate_Click">
-                    <TextBlock Margin="10" Text="Run calibration"/>
+                    <TextBlock x:Name="startButtonText" Margin="10" Text="Run calibration"/>
                 </Button>
                 <Button Style="{StaticResource FlatButton}" Click="ButtonCancel_Click">
                     <TextBlock Margin="10" Text="Cancel"/>
