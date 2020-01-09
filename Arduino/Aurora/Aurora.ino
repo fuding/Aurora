@@ -2,6 +2,7 @@
  * Aurora .NET
  * Copyright (c) 2020 RapidDev
  * Leszek Pomianowski
+ * https://github.com/rapiddev/Aurora/
  * 
  * Inspired by Bambilight
  * Copyright (c) 2016 Matthias Böffel
