@@ -1,45 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO.Ports;
-using System.ComponentModel;
-using System.Windows;
 
 namespace Aurora.Assets
 {
     public class SerialOutput
     {
-        private readonly byte[] preamble = { 0x00, 0x01, 0x02 };
         private string serialPortName = null;
-        
-        private BackgroundWorker bgWorker = new BackgroundWorker();
         private SerialPort serialPort;
+
+        private int writes = 0;
 
         //3 - wellcome,  1 - mode, 128 * 3 - led count  (384)
         byte[] message = new byte[3 + 1 + (128 * 3)];
-        byte ledDir;
 
         public SerialOutput()
         {
-            Init();
+            serialPortName = Properties.Settings.Default.serial_port;
+            serialPort = new SerialPort(serialPortName, 115200);
         }
 
         public bool isOpen()
         {
             return serialPort.IsOpen;
-        }
-
-        private void Init()
-        {
-            serialPortName = Properties.Settings.Default.serial_port;
-            serialPort = new SerialPort(serialPortName, 115200);
-
-            if (Properties.Settings.Default.led_dir == 0)
-                ledDir = 0x00;
-            else
-                ledDir = 0x01;
         }
 
         public void FillLEDs(byte[] leds)
@@ -88,6 +70,14 @@ namespace Aurora.Assets
 
                 byte[] outputStream = Message();
                 serialPort.Write(outputStream, 0, outputStream.Length);
+
+                writes++;
+                if (writes > 50)
+                {
+                    serialPort.Close();
+                    serialPort.Open();
+                    serialPort.Write("RESET");
+                }
             }
             catch (Exception ex)
             {
