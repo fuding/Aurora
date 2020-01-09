@@ -17,6 +17,8 @@ namespace Aurora.Assets
         private BackgroundWorker bgWorker = new BackgroundWorker();
         private SerialPort serialPort;
 
+        //3 - wellcome,  1 - mode, 128 * 3 - led count  (384)
+        byte[] message = new byte[3 + 1 + (128 * 3)];
         byte ledDir;
 
         public SerialOutput()
@@ -40,13 +42,32 @@ namespace Aurora.Assets
                 ledDir = 0x01;
         }
 
-        public byte[] Message()
+        public void FillLEDs(byte[] leds)
         {
-            byte[] message;
-
-            //3 - wellcome,  1 - mode, 128 * 3 - led count  (384)
             message = new byte[3 + 1 + (128 * 3)];
 
+            int counter = 3;
+            int ledShift = 0;
+
+            //Fill cells from argument
+            for (int i = 0; i < leds.Length / 3; i++)
+            {
+                message[counter++] = leds[ledShift++]; //RED
+                message[counter++] = leds[ledShift++]; //GREEN
+                message[counter++] = leds[ledShift++]; //BLUE
+            }
+
+            //Fill empty cells
+            for (int i = 0; i < 128 - (leds.Length / 3); i++)
+            {
+                message[counter++] = 0x00; //RED
+                message[counter++] = 0x00; //GREEN
+                message[counter++] = 0x00; //BLUE
+            }
+        }
+
+        public byte[] Message()
+        {
             //Preamble
             message[0] = 0x00;
             message[1] = 0x01;
@@ -54,30 +75,6 @@ namespace Aurora.Assets
 
             //Mode
             message[3] = 0x00;
-
-            int counter = 3;
-            for (int i = 0; i < 128; i++)
-            {
-                if(i <= 5)
-                {
-                    message[counter++] = 0x00; //RED
-                    message[counter++] = 0x00; //GREEN
-                    message[counter++] = 0xFF; //BLUE
-                }
-                else if(i <= 10)
-                {
-                    message[counter++] = 0x00; //RED
-                    message[counter++] = 0xFF; //GREEN
-                    message[counter++] = 0x00; //BLUE
-                }
-                else
-                {
-                    message[counter++] = 0xFF; //RED
-                    message[counter++] = 0x00; //GREEN
-                    message[counter++] = 0x00; //BLUE
-                }
-
-            }
 
             return message;
         }

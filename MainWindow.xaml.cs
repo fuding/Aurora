@@ -32,7 +32,7 @@ namespace Aurora
         public SerialOutput serial = new SerialOutput();
         public ScreenColor screenSource = new ScreenColor();
         Process currentProc = Process.GetCurrentProcess();
-        public int tickRate = 150;
+        public int tickRate = 100;
         public int ticks = 0;
         public bool status = false;
         public bool lockview = false;
@@ -98,6 +98,27 @@ namespace Aurora
                           this.Dispatcher.Invoke(() =>
                           {
                               serial = new SerialOutput();
+
+                              List<int> horizontalPixelArray = new List<int> { };
+                              int screenW = screenSource.getWidth();
+                              int pixelDistanceW = screenW / Properties.Settings.Default.top_led;
+                              int cnt = 0;
+                              int leds = Properties.Settings.Default.top_led;
+                              int currentPixel = 0;
+
+                              byte[] fillled = new byte[(leds * 3)];
+
+                              for (int i = 0; i < leds; i++)
+                              {
+                                  System.Drawing.Color pixelColor = screenSource.getTop(currentPixel);
+                                  currentPixel += pixelDistanceW;
+
+                                  fillled[cnt++] = pixelColor.R;
+                                  fillled[cnt++] = pixelColor.G;
+                                  fillled[cnt++] = pixelColor.B;
+                              }
+
+                              serial.FillLEDs(fillled);
                               serial.Send();
 
                               if (!lockview)
