@@ -21,7 +21,6 @@ namespace Aurora.Pages
     public partial class Calibration : UserControl
     {
         MainWindow ParentWindow = ((MainWindow)System.Windows.Application.Current.MainWindow);
-        CalibrationWindow calibrationWindow = new CalibrationWindow();
 
         bool calibration_running = false;
         public Calibration()
@@ -29,8 +28,19 @@ namespace Aurora.Pages
             InitializeComponent();
         }
 
+        private void stopCalibration()
+        {
+            if (calibration_running)
+            {
+                startButtonText.Text = "Run calibration";
+                ParentWindow.hideCalibration();
+                calibration_running = false;
+            }
+        }
+
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
+            stopCalibration();
         }
 
         private void ButtonCalibrate_Click(object sender, RoutedEventArgs e)
@@ -38,36 +48,20 @@ namespace Aurora.Pages
             if(!calibration_running)
             {
                 startButtonText.Text = "Stop calibration";
-                int screenWidth = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width;
-                int screenHeight = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
-
-
-
-                calibrationWindow.Width = screenWidth;
-                calibrationWindow.Height = screenHeight;
-
-                calibrationWindow.WindowStartupLocation = WindowStartupLocation.Manual;
-
-                calibrationWindow.Left = 0;
-                calibrationWindow.Top = 0;
-
-                calibrationWindow.Show();
-                Application.Current.MainWindow.Owner = calibrationWindow;
-                Application.Current.MainWindow.Focus();
-
+                ParentWindow.showCalibration();
                 calibration_running = true;
             }
             else
             {
-                startButtonText.Text = "Run calibration";
-                calibrationWindow.Hide();
-                calibration_running = false;
+                stopCalibration();
             }
             
         }
 
         private void ButtonCancel_Click(object sender, RoutedEventArgs e)
         {
+            stopCalibration();
+
             ParentWindow.showMenu();
             ParentWindow.Panel.Add(new Dashboard());
         }

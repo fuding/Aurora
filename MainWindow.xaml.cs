@@ -22,6 +22,8 @@ namespace Aurora
         public UIElementCollection Panel;
         public SerialOutput serial = new SerialOutput();
         public ScreenColor screenSource = new ScreenColor();
+        public CalibrationWindow calibrationWindow;
+
         Process currentProc = Process.GetCurrentProcess();
         public int tickRate = 100;
         public int ticks = 0;
@@ -59,6 +61,9 @@ namespace Aurora
             {
                 ni.Visible = true;
                 this.Hide();
+                if (calibrationWindow != null)
+                    if (calibrationWindow.ShowActivated)
+                        calibrationWindow.Hide();
             }
             base.OnStateChanged(e);
         }
@@ -68,6 +73,25 @@ namespace Aurora
             status = false;
             Environment.Exit(0);
             base.OnClosing(e);
+        }
+
+        public void showCalibration()
+        {
+            if (calibrationWindow == null)
+                calibrationWindow = new CalibrationWindow() { Top = 0, Left = 0, WindowStartupLocation = WindowStartupLocation.Manual };
+
+            calibrationWindow.Width = screenSource.getWidth();
+            calibrationWindow.Height = screenSource.getHeight();
+
+            calibrationWindow.Show();
+            this.Owner = calibrationWindow;
+            this.Focus();
+        }
+
+        public void hideCalibration()
+        {
+            calibrationWindow.Hide();
+            this.Focus();
         }
 
         private void AsyncScreenshot()

@@ -22,7 +22,6 @@ namespace Aurora.Pages
     {
         public CalibrationWindow()
         {
-
             InitializeComponent();
         }
     }
