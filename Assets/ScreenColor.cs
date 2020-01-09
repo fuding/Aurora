@@ -6,16 +6,28 @@ namespace Aurora.Assets
 {
     public class ScreenColor
     {
-        int screenWidth = 0;
-        int screenHeight = 0;
+        int screenWidth = Screen.PrimaryScreen.Bounds.Width;
+        int screenHeight = Screen.PrimaryScreen.Bounds.Height;
 
         Bitmap[] bmp_map = new Bitmap[4];
 
         public ScreenColor()
         {
-            screenWidth = Screen.PrimaryScreen.Bounds.Width;
-            screenHeight = Screen.PrimaryScreen.Bounds.Height;
+            BMPInit();
+        }
 
+        public int getHeight()
+        {
+            return screenHeight;
+        }
+
+        public int getWidth()
+        {
+            return screenWidth;
+        }
+
+        private void BMPInit()
+        {
             bmp_map[0] = new Bitmap(screenWidth, 1, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             bmp_map[1] = new Bitmap(screenWidth, 1, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
@@ -23,6 +35,11 @@ namespace Aurora.Assets
             bmp_map[3] = new Bitmap(1, screenHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
         }
 
+        public void Refresh(int horizontalOffset = 20, int verticalOffset = 20)
+        {
+            refreshTop(horizontalOffset);
+            refreshBottom(horizontalOffset);
+        }
 
         public System.Drawing.Color[] getTopColors()
         {
@@ -43,11 +60,11 @@ namespace Aurora.Assets
                 
                 if(currentPosition >= screenWidth)
                 {
-                    colors[i] = getTop(screenWidth - 1);
+                    colors[i] = bmp_map[0].GetPixel(screenWidth - 1, 0);
                 }
                 else
                 {
-                    colors[i] = getTop(currentPosition);
+                    colors[i] = bmp_map[0].GetPixel(currentPosition, 0);
                     currentPosition += pixelDistance;
                 }
             }
@@ -64,12 +81,6 @@ namespace Aurora.Assets
             return colors;
         }
 
-        public void Refresh(int horizontalOffset = 20, int verticalOffset = 20)
-        {
-            refreshTop(horizontalOffset);
-            refreshBottom(horizontalOffset);
-        }
-
         public void refreshTop(int offset = 20)
         {
             Graphics gfx = Graphics.FromImage(bmp_map[0]);
@@ -84,36 +95,6 @@ namespace Aurora.Assets
             gfx.CopyFromScreen(0, screenHeight - offset, 0, 0, Screen.PrimaryScreen.Bounds.Size, CopyPixelOperation.SourceCopy);
             MemoryStream msIn = new MemoryStream();
             bmp_map[1].Save(msIn, System.Drawing.Imaging.ImageCodecInfo.GetImageEncoders()[0], null);
-        }
-
-        public System.Drawing.Color getTop(int position = 1)
-        {
-            return bmp_map[0].GetPixel(position, 0);
-        }
-
-        public System.Drawing.Color getBottom(int position = 1)
-        {
-            return bmp_map[1].GetPixel(position, 0);
-        }
-
-        public System.Drawing.Color getLeft(int position = 1)
-        {
-            return bmp_map[1].GetPixel(0, position);
-        }
-
-        public System.Drawing.Color getRight(int position = 1)
-        {
-            return bmp_map[1].GetPixel(0, position);
-        }
-
-        public int getHeight()
-        {
-            return screenHeight;
-        }
-
-        public int getWidth()
-        {
-            return screenWidth;
         }
     }
 }

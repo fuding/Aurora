@@ -6,7 +6,8 @@ namespace Aurora.Assets
     public class SerialOutput
     {
         private SerialPort SerialPort;
-        byte[] message = new byte[3 + 1 + (256 * 3)];
+        private byte[] message = new byte[3 + 1 + (256 * 3)];
+
         private string portname = null;
         private int writes = 0;
 
