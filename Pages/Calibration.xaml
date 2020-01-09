@@ -17,9 +17,6 @@
         </Grid>
         <Grid Grid.Row="1">
             <StackPanel Grid.Column="0" Orientation="Horizontal">
-                <Button Style="{StaticResource FlatButton}" Click="ButtonSave_Click">
-                    <TextBlock Margin="10" Text="Save"/>
-                </Button>
                 <Button Style="{StaticResource FlatButton}" Click="ButtonCalibrate_Click">
                     <TextBlock x:Name="startButtonText" Margin="10" Text="Run calibration"/>
                 </Button>

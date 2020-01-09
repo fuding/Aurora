@@ -47,7 +47,7 @@ namespace Aurora.Pages
         {
             if(!calibration_running)
             {
-                startButtonText.Text = "Stop calibration";
+                startButtonText.Text = "Save calibration";
                 ParentWindow.showCalibration();
                 calibration_running = true;
             }

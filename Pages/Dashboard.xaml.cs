@@ -14,6 +14,18 @@ namespace Aurora.Pages
             InitializeComponent();
             Preview();
             DisplayStatus();
+
+            fillLeds();
+        }
+
+        public void fillLeds()
+        {
+            for (int i = 0; i < 20; i++)
+            {
+
+
+                TopLedsList.Children.Add(new ContentControl() { ContentTemplate = (System.Windows.DataTemplate)this.Resources["LED_BOX"] });
+            }
         }
 
         private void DisplayStatus()
