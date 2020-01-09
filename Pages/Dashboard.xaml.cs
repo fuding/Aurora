@@ -19,7 +19,7 @@ namespace Aurora.Pages
         {
             InitializeComponent();
             Preview();
-            fillLeds();
+            //fillLeds();
         }
 
         public void fillLeds()

@@ -57,7 +57,7 @@ void fetchData()
     {
       totalLeds[lds++] = CRGB(buffer[bufferOffset++], buffer[bufferOffset++], buffer[bufferOffset++]);
     }
-    FastLED.delay(100);
+    FastLED.delay(30);
     FastLED.show();
   }
   else
@@ -102,7 +102,7 @@ void rainbowFill()
     colorIndex += 3;
   }
 
-  FastLED.delay(10);
+  FastLED.delay(30);
 
   if (Serial.available() > 0)
   {
