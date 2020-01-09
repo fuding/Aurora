@@ -90,23 +90,15 @@ namespace Aurora
                           {
                               serial = new SerialOutput();
 
-                              List<int> horizontalPixelArray = new List<int> { };
-                              int screenW = screenSource.getWidth();
-                              int pixelDistanceW = screenW / Properties.Settings.Default.top_led;
+                              System.Drawing.Color[] pixels = screenSource.getTopColors();
+
+                              byte[] fillled = new byte[(Properties.Settings.Default.top_led * 3)];
                               int cnt = 0;
-                              int leds = Properties.Settings.Default.top_led;
-                              int currentPixel = 0;
-
-                              byte[] fillled = new byte[(leds * 3)];
-
-                              for (int i = 0; i < leds; i++)
+                              foreach (System.Drawing.Color pixel in pixels)
                               {
-                                  System.Drawing.Color pixelColor = screenSource.getTop(currentPixel);
-                                  currentPixel += pixelDistanceW;
-
-                                  fillled[cnt++] = pixelColor.R;
-                                  fillled[cnt++] = pixelColor.G;
-                                  fillled[cnt++] = pixelColor.B;
+                                  fillled[cnt++] = pixel.R;
+                                  fillled[cnt++] = pixel.G;
+                                  fillled[cnt++] = pixel.B;
                               }
 
                               serial.FillLEDs(fillled);

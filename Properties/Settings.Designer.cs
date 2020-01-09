@@ -130,5 +130,29 @@ namespace Aurora.Properties {
                 this["serial_port"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("60")]
+        public int top_padding {
+            get {
+                return ((int)(this["top_padding"]));
+            }
+            set {
+                this["top_padding"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("60")]
+        public int side_padding {
+            get {
+                return ((int)(this["side_padding"]));
+            }
+            set {
+                this["side_padding"] = value;
+            }
+        }
     }
 }

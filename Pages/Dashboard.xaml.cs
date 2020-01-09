@@ -13,22 +13,20 @@ namespace Aurora.Pages
         {
             InitializeComponent();
             Preview();
+            DisplayStatus();
+        }
 
-            if(ParentWindow.status)
+        private void DisplayStatus()
+        {
+            if (ParentWindow.status)
                 currentStatus.Text = "Enabled";
             else
                 currentStatus.Text = "Disabled";
-
-            serialPort.Text = Properties.Settings.Default.serial_port;
-            if (ParentWindow.serial.isOpen())
-                serialOpen.Text = "Open";
-            else
-                serialOpen.Text = "Closed";
         }
 
         private void Preview()
         {
-
+            /*
             List<int> horizontalPixelArray = new List<int> { };
             List<int> verticalPixelArray = new List<int> { };
 
@@ -50,6 +48,7 @@ namespace Aurora.Pages
                 if(currentPixel + pixelDistanceW < screenW)
                     verticalPixelArray.Add(currentPixel += pixelDistanceW);
             }
+            */
         }
     }
 }

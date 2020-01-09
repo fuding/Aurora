@@ -19,11 +19,6 @@ namespace Aurora.Assets
             serialPort = new SerialPort(serialPortName, 115200);
         }
 
-        public bool isOpen()
-        {
-            return serialPort.IsOpen;
-        }
-
         public void FillLEDs(byte[] leds)
         {
             message = new byte[3 + 1 + (128 * 3)];

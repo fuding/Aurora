@@ -17,21 +17,6 @@ namespace Aurora.Assets
 
         Bitmap[] bmp_map = new Bitmap[4];
 
-        /*
-        [DllImport("gdi32.dll", EntryPoint = "DeleteObject")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool DeleteObject([In] IntPtr hObject);
-        public ImageSource debugPreview(int id)
-        {
-            IntPtr handle = bmp_map[id].GetHbitmap();
-            try
-            {
-                return Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-            }
-            finally { DeleteObject(handle); }
-        }
-        */
-
         public ScreenColor()
         {
             screenWidth = Screen.PrimaryScreen.Bounds.Width;
@@ -42,6 +27,47 @@ namespace Aurora.Assets
 
             bmp_map[2] = new Bitmap(1, screenHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             bmp_map[3] = new Bitmap(1, screenHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+        }
+
+
+        public System.Drawing.Color[] getTopColors()
+        {
+            //Led count
+            System.Drawing.Color[] colors = new System.Drawing.Color[Properties.Settings.Default.top_led];
+
+            //Screen size without padding
+            int workWidth = screenWidth - (Properties.Settings.Default.top_padding * 2 );
+
+            //Current pixel position
+            int currentPosition = Properties.Settings.Default.top_padding;
+
+            //Pixel multiplier
+            int pixelDistance = workWidth / Properties.Settings.Default.top_led;
+
+            for (int i = 0; i < Properties.Settings.Default.top_led; i++)
+            {
+                
+                if(currentPosition >= screenWidth)
+                {
+                    colors[i] = getTop(screenWidth - 1);
+                }
+                else
+                {
+                    colors[i] = getTop(currentPosition);
+                    currentPosition += pixelDistance;
+                }
+            }
+
+            /* Debug
+            int cnt = 0;
+            foreach (System.Drawing.Color item in colors)
+            {
+                cnt++;
+                Console.WriteLine("=======================\nPOSITION\nCurrent position #" + cnt + ", R:" + item.R + ", G:" + item.G + ", B:" + item.B);
+            }
+            */
+
+            return colors;
         }
 
         public void Refresh(int horizontalOffset = 20, int verticalOffset = 20)

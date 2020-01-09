@@ -25,9 +25,6 @@
                     
                     <TextBlock Text="Serial port" Margin="0,15,0,0"/>
                     <TextBlock x:Name="serialPort" Text="Unknown" FontSize="20"/>
-
-                    <TextBlock Text="Port status" Margin="0,15,0,0"/>
-                    <TextBlock x:Name="serialOpen" Text="Closed" FontSize="20"/>
                 </StackPanel>
             </Grid>
         </Grid>
