@@ -53,7 +53,7 @@ namespace Aurora.Pages
 
                 calibrationWindow.Show();
                 Application.Current.MainWindow.Owner = calibrationWindow;
-
+                Application.Current.MainWindow.Focus();
 
                 calibration_running = true;
             }

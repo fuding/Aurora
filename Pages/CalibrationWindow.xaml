@@ -8,8 +8,9 @@
         WindowStyle="None"
         Background="Transparent"
         AllowsTransparency="True"
+        Foreground="White"
         Title="CalibrationWindow" Height="450" Width="800">
-    <Grid x:Name="MainCalibrationView" Background="#333">
-        <TextBlock Text="TEST KALIBRACJI"/>
+    <Grid x:Name="MainCalibrationView" Background="#82000000">
+        <TextBlock Margin="20" Text="TEST KALIBRACJI"/>
     </Grid>
 </Window>
