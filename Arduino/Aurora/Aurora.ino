@@ -1,3 +1,13 @@
+/*
+ * Aurora .NET
+ * Copyright (c) 2020 RapidDev
+ * Leszek Pomianowski
+ * 
+ * Inspired by Bambilight
+ * Copyright (c) 2016 Matthias Böffel
+ * https://github.com/MrBoe/Bambilight/
+ */
+
 #include "FastLED.h"
 
 //3 - wellcome,  1 - mode, 128 * 3 - led count  (384)
