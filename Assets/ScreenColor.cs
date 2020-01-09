@@ -44,8 +44,8 @@ namespace Aurora.Assets
         public System.Drawing.Color[] getTopColors()
         {
             System.Drawing.Color[] colors = new System.Drawing.Color[Properties.Settings.Default.top_led];
-            int currentPosition = Properties.Settings.Default.top_padding;
-            int pixelDistance = (screenWidth - (Properties.Settings.Default.top_padding * 2)) / Properties.Settings.Default.top_led;
+            int currentPosition = Properties.Settings.Default.side_padding;
+            int pixelDistance = (screenWidth - (Properties.Settings.Default.side_padding * 2)) / Properties.Settings.Default.top_led;
 
             for (int i = 0; i < Properties.Settings.Default.top_led; i++)
             {
@@ -54,6 +54,24 @@ namespace Aurora.Assets
                 else
                     colors[i] = bmp_map[0].GetPixel(currentPosition, 0);
                     currentPosition += pixelDistance;
+            }
+
+            return colors;
+        }
+
+        public System.Drawing.Color[] getBottomColors()
+        {
+            System.Drawing.Color[] colors = new System.Drawing.Color[Properties.Settings.Default.top_led];
+            int currentPosition = Properties.Settings.Default.side_padding;
+            int pixelDistance = (screenWidth - (Properties.Settings.Default.side_padding * 2)) / Properties.Settings.Default.top_led;
+
+            for (int i = 0; i < Properties.Settings.Default.top_led; i++)
+            {
+                if (currentPosition >= screenWidth)
+                    colors[i] = bmp_map[1].GetPixel(screenWidth - 1, 0);
+                else
+                    colors[i] = bmp_map[1].GetPixel(currentPosition, 0);
+                currentPosition += pixelDistance;
             }
 
             return colors;

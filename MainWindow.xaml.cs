@@ -33,11 +33,10 @@ namespace Aurora
         {
             InitializeComponent();
             Tray();
+            AsyncScreenshot();
 
             Panel = PagePanel.Children;
             Panel.Add(new Dashboard());
-
-            AsyncScreenshot();
 
             //Ram usage
             ramUsage.Text = "RAM Usage: " + (currentProc.PrivateMemorySize64 / 1024 / 1024).ToString() + "MB";
@@ -47,6 +46,7 @@ namespace Aurora
             else
                 serialPort.Text = "Serial port: " + "Unknown";
         }
+
         private void Tray()
         {
             ni.Icon = System.Drawing.Icon.ExtractAssociatedIcon(System.Reflection.Assembly.GetEntryAssembly().ManifestModule.Name);
@@ -59,6 +59,7 @@ namespace Aurora
                 this.WindowState = WindowState.Normal;
             };
         }
+
         protected override void OnStateChanged(EventArgs e)
         {
             if (WindowState == System.Windows.WindowState.Minimized)

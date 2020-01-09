@@ -25,13 +25,16 @@ namespace Aurora.Pages
         public void fillLeds()
         {
             List<LedColor> ledlist = new List<LedColor> { };
-
             System.Drawing.Color[] pixels = ParentWindow.screenSource.getTopColors();
-
             foreach (System.Drawing.Color pixel in pixels)
                 ledlist.Add(new LedColor() { raw_color = ColorTranslator.ToHtml(pixel) });
-
             topledlist.ItemsSource = ledlist;
+
+            ledlist = new List<LedColor> { };
+            pixels = ParentWindow.screenSource.getBottomColors();
+            foreach (System.Drawing.Color pixel in pixels)
+                ledlist.Add(new LedColor() { raw_color = ColorTranslator.ToHtml(pixel) });
+            bottomledlist.ItemsSource = ledlist;
         }
 
         private void Preview()
