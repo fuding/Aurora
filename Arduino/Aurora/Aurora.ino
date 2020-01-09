@@ -15,13 +15,9 @@
 
 #define LED_PIN 2
 
-#define STATUS_CONNECTED 1
-#define STATUS_DISCONNECTED 0
-
-uint8_t wellcome_length = 3;
 uint8_t wellcome_position = 0;
 uint8_t ledIndex = 0;
-uint8_t status = STATUS_DISCONNECTED;
+uint8_t status = 0;
 byte WELLCOME[] = { 0x00, 0x01, 0x02};
 byte buffer[BUFFER_SIZE];
 
@@ -39,14 +35,12 @@ void setup()
 
 void loop()
 {
-  switch (status) {
-    case STATUS_DISCONNECTED: 
+  if(status == 0)
+  {
     rainbowFill();
-    break;
-    
-    case STATUS_CONNECTED:
+  }
+  else{
     fetchData();
-    break;
   }
 }
 
@@ -67,7 +61,7 @@ void fetchData()
   }
   else
   {
-    status = STATUS_DISCONNECTED;
+    status = 0;
   }
 }
 
@@ -76,7 +70,7 @@ bool Wellcome()
   unsigned long last_serial_available = millis();
   Serial.readBytes(buffer, BUFFER_SIZE);
 
-  while (wellcome_position < wellcome_length)
+  while (wellcome_position < 3)
   {
     if (Serial.available() > 0)
     {
@@ -111,6 +105,6 @@ void rainbowFill()
 
   if (Serial.available() > 0)
   {
-    status = STATUS_CONNECTED;
+    status = 1;
   }
 }
