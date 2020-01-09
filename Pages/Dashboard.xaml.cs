@@ -1,4 +1,11 @@
-﻿using System.Windows.Controls;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using System.Windows.Controls;
+
+struct LedColor
+{
+    public string raw_color { get; set; }
+}
 
 namespace Aurora.Pages
 {
@@ -19,12 +26,14 @@ namespace Aurora.Pages
 
         public void fillLeds()
         {
-            for (int i = 0; i < 20; i++)
-            {
+            List<LedColor> ledlist = new List<LedColor> { };
 
+            System.Drawing.Color[] pixels = ParentWindow.screenSource.getTopColors();
 
-                TopLedsList.Children.Add(new ContentControl() { ContentTemplate = (System.Windows.DataTemplate)this.Resources["LED_BOX"] });
-            }
+            foreach (System.Drawing.Color pixel in pixels)
+                ledlist.Add(new LedColor() { raw_color = ColorTranslator.ToHtml(pixel) });
+
+            topledlist.ItemsSource = ledlist;
         }
 
         private void DisplayStatus()
@@ -33,11 +42,6 @@ namespace Aurora.Pages
                 currentStatus.Text = "Enabled";
             else
                 currentStatus.Text = "Disabled";
-
-            if(Properties.Settings.Default.serial_port != "")
-                serialPort.Text = Properties.Settings.Default.serial_port;
-            else
-                serialPort.Text = "Unknown";
         }
 
         private void Preview()

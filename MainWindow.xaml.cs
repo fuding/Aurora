@@ -41,6 +41,11 @@ namespace Aurora
 
             //Ram usage
             ramUsage.Text = "RAM Usage: " + (currentProc.PrivateMemorySize64 / 1024 / 1024).ToString() + "MB";
+
+            if (Properties.Settings.Default.serial_port != "")
+                serialPort.Text = "Serial port: " + Properties.Settings.Default.serial_port;
+            else
+                serialPort.Text = "Serial port: " + "Unknown";
         }
         private void Tray()
         {

@@ -8,6 +8,11 @@
         </Canvas>
     </Viewbox>
 
+    <Style x:Key="ListBoxItemStyle" TargetType="ListBoxItem">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+    </Style>
+
     <Style x:Key="FlatButton" TargetType="{x:Type Button}">
         <Setter Property="Foreground" Value="White" />
         <Setter Property="MinWidth" Value="150" />
