@@ -11,7 +11,7 @@ namespace Aurora.Assets
         private int writes = 0;
 
         //3 - wellcome,  1 - mode, 128 * 3 - led count  (384)
-        byte[] message = new byte[3 + 1 + (128 * 3)];
+        byte[] message = new byte[3 + 1 + (256 * 3)];
 
         public SerialOutput()
         {
@@ -21,7 +21,7 @@ namespace Aurora.Assets
 
         public void FillLEDs(byte[] leds)
         {
-            message = new byte[3 + 1 + (128 * 3)];
+            message = new byte[3 + 1 + (256 * 3)];
 
             int counter = 3;
             int ledShift = 0;
@@ -35,7 +35,7 @@ namespace Aurora.Assets
             }
 
             //Fill empty cells
-            for (int i = 0; i < 128 - (leds.Length / 3); i++)
+            for (int i = 0; i < 256 - (leds.Length / 3); i++)
             {
                 message[counter++] = 0x00; //RED
                 message[counter++] = 0x00; //GREEN

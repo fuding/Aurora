@@ -10,8 +10,8 @@
 
 #include "FastLED.h"
 
-//3 - wellcome,  1 - mode, 128 * 3 - led count  (384)
-#define BUFFER_SIZE 3 + 1 + (128 * 3)
+//3 - wellcome,  1 - mode, 256 * 3 - led count  (768)
+#define BUFFER_SIZE 3 + 1 + (256 * 3)
 
 #define LED_PIN 2
 
@@ -21,13 +21,13 @@ uint8_t status = 0;
 byte WELLCOME[] = { 0x00, 0x01, 0x02};
 byte buffer[BUFFER_SIZE];
 
-CRGB totalLeds[128];
+CRGB totalLeds[256];
 
 void setup()
 {
   Serial.begin(115200);
   FastLED.clear(true);
-  FastLED.addLeds<WS2812B, LED_PIN, GRB>(totalLeds, 128);
+  FastLED.addLeds<WS2812B, LED_PIN, GRB>(totalLeds, 256);
   FastLED.setBrightness(50);
 
   Serial.write("\nAurora v.1.0.0");
@@ -52,7 +52,7 @@ void fetchData()
 
     int lds = 0;
     int bufferOffset = 3;
-    for (int i = 0; i < 128; ++i)
+    for (int i = 0; i < 256; ++i)
     {
       totalLeds[lds++] = CRGB(buffer[bufferOffset++], buffer[bufferOffset++], buffer[bufferOffset++]);
     }
@@ -96,7 +96,7 @@ void rainbowFill()
 {
   ledIndex++;
   uint8_t colorIndex = ledIndex;
-  for( int i = 0; i < 128; i++) {
+  for( int i = 0; i < 256; i++) {
     totalLeds[i] = ColorFromPalette(RainbowColors_p, colorIndex, 50, LINEARBLEND);
     colorIndex += 3;
   }
