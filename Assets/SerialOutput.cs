@@ -10,13 +10,15 @@ namespace Aurora.Assets
 
         private int writes = 0;
 
-        //3 - wellcome,  1 - mode, 128 * 3 - led count  (384)
+        //3 - wellcome,  1 - mode, 256 * 3 - led count  (768)
         byte[] message = new byte[3 + 1 + (256 * 3)];
 
         public SerialOutput()
         {
             serialPortName = Properties.Settings.Default.serial_port;
-            serialPort = new SerialPort(serialPortName, 115200);
+
+            if(serialPortName != null && serialPortName != "")
+                serialPort = new SerialPort(serialPortName, 115200);
         }
 
         public void FillLEDs(byte[] leds)
@@ -58,33 +60,40 @@ namespace Aurora.Assets
 
         public void Send()
         {
-            try
+            if (serialPortName != null && serialPortName != "")
             {
-                serialPort = new SerialPort(serialPortName, 115200);
-                serialPort.Open();
-
-                byte[] outputStream = Message();
-                serialPort.Write(outputStream, 0, outputStream.Length);
-
-                writes++;
-                if (writes > 50)
+                try
                 {
-                    serialPort.Close();
+                    serialPort = new SerialPort(serialPortName, 115200);
                     serialPort.Open();
-                    serialPort.Write("RESET");
+
+                    byte[] outputStream = Message();
+                    serialPort.Write(outputStream, 0, outputStream.Length);
+
+                    writes++;
+                    if (writes > 50)
+                    {
+                        serialPort.Close();
+                        serialPort.Open();
+                        serialPort.Write("RESET");
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.Write(ex);
-            }
-            finally
-            {
-                if (null != serialPort && serialPort.IsOpen)
+                catch (Exception ex)
                 {
-                    serialPort.Close();
-                    serialPort.Dispose();
+                    Console.Write(ex);
                 }
+                finally
+                {
+                    if (null != serialPort && serialPort.IsOpen)
+                    {
+                        serialPort.Close();
+                        serialPort.Dispose();
+                    }
+                }
+            }
+            else
+            {
+                Console.Write("Serial port name cannot be empty");
             }
         }
     }

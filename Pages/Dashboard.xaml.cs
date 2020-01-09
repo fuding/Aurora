@@ -23,7 +23,10 @@ namespace Aurora.Pages
             else
                 currentStatus.Text = "Disabled";
 
-            serialPort.Text = Properties.Settings.Default.serial_port;
+            if(Properties.Settings.Default.serial_port != "")
+                serialPort.Text = Properties.Settings.Default.serial_port;
+            else
+                serialPort.Text = "Unknown";
         }
 
         private void Preview()
