@@ -5,20 +5,14 @@ namespace Aurora.Assets
 {
     public class SerialOutput
     {
-        private string serialPortName = null;
-        private SerialPort serialPort;
-
-        private int writes = 0;
-
-        //3 - wellcome,  1 - mode, 256 * 3 - led count  (768)
+        private SerialPort SerialPort;
         byte[] message = new byte[3 + 1 + (256 * 3)];
+        private string portname = null;
+        private int writes = 0;
 
         public SerialOutput()
         {
-            serialPortName = Properties.Settings.Default.serial_port;
-
-            if(serialPortName != null && serialPortName != "")
-                serialPort = new SerialPort(serialPortName, 115200);
+            portname = Properties.Settings.Default.serial_port;
         }
 
         public void FillLEDs(byte[] leds)
@@ -45,37 +39,31 @@ namespace Aurora.Assets
             }
         }
 
-        public byte[] Message()
-        {
-            //Preamble
-            message[0] = 0x00;
-            message[1] = 0x01;
-            message[2] = 0x02;
-
-            //Mode
-            message[3] = 0x00;
-
-            return message;
-        }
-
         public void Send()
         {
-            if (serialPortName != null && serialPortName != "")
+            if (portname != null && portname != "")
             {
                 try
                 {
-                    serialPort = new SerialPort(serialPortName, 115200);
-                    serialPort.Open();
+                    SerialPort = new SerialPort(portname, 115200);
+                    SerialPort.Open();
 
-                    byte[] outputStream = Message();
-                    serialPort.Write(outputStream, 0, outputStream.Length);
+                    //Preamble
+                    message[0] = 0x00;
+                    message[1] = 0x01;
+                    message[2] = 0x02;
+
+                    //Mode
+                    message[3] = 0x00;
+
+                    SerialPort.Write(message, 0, message.Length);
 
                     writes++;
                     if (writes > 50)
                     {
-                        serialPort.Close();
-                        serialPort.Open();
-                        serialPort.Write("RESET");
+                        SerialPort.Close();
+                        SerialPort.Open();
+                        SerialPort.Write("RESET");
                     }
                 }
                 catch (Exception ex)
@@ -84,10 +72,10 @@ namespace Aurora.Assets
                 }
                 finally
                 {
-                    if (null != serialPort && serialPort.IsOpen)
+                    if (null != SerialPort && SerialPort.IsOpen)
                     {
-                        serialPort.Close();
-                        serialPort.Dispose();
+                        SerialPort.Close();
+                        SerialPort.Dispose();
                     }
                 }
             }
