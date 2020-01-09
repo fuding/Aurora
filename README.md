@@ -9,7 +9,7 @@ The Aurora gets a pixel bar from your screen, then reads the colors of individua
 All configuration is done from the Windows application level. You don't have to change anything in the code for Arduino. Unless you want to change the communication port for the RGB led strip, which is set to 2 by default.
 
 ## What is needed?
-To run the Aura application you will need:
+To run the Aurora application you will need:
 - .NET Framework 4.8 installed
 - Windows 10 version at least 1909
 - Atmega / ESP device compatible with Arduino
