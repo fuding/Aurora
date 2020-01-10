@@ -35,12 +35,18 @@ namespace Aurora
             Tray();
             AsyncScreenshot();
 
+            FillText();
+
             Panel = PagePanel.Children;
             Panel.Add(new Dashboard());
+        }
 
-            //Ram usage
+        private void FillText()
+        {
+            //RAM usage
             ramUsage.Text = "RAM Usage: " + (currentProc.PrivateMemorySize64 / 1024 / 1024).ToString() + "MB";
 
+            //Selected serial port
             if (Properties.Settings.Default.serial_port != "")
                 serialPort.Text = "Serial port: " + Properties.Settings.Default.serial_port;
             else

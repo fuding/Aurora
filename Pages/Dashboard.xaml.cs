@@ -19,49 +19,23 @@ namespace Aurora.Pages
         {
             InitializeComponent();
             Preview();
-            //fillLeds();
         }
 
-        public void fillLeds()
+        private void Preview()
         {
+            //Top led list
             List<LedColor> ledlist = new List<LedColor> { };
             System.Drawing.Color[] pixels = ParentWindow.screenSource.getTopColors();
             foreach (System.Drawing.Color pixel in pixels)
                 ledlist.Add(new LedColor() { raw_color = ColorTranslator.ToHtml(pixel) });
             topledlist.ItemsSource = ledlist;
 
+            //Bottom led list
             ledlist = new List<LedColor> { };
             pixels = ParentWindow.screenSource.getBottomColors();
             foreach (System.Drawing.Color pixel in pixels)
                 ledlist.Add(new LedColor() { raw_color = ColorTranslator.ToHtml(pixel) });
             bottomledlist.ItemsSource = ledlist;
-        }
-
-        private void Preview()
-        {
-            /*
-            List<int> horizontalPixelArray = new List<int> { };
-            List<int> verticalPixelArray = new List<int> { };
-
-            int screenW = ParentWindow.screenSource.getWidth();
-            int screenH = ParentWindow.screenSource.getHeight();
-
-            int pixelDistanceW = screenW / Properties.Settings.Default.top_led;
-            int pixelDistanceH = screenH / Properties.Settings.Default.side_led;
-
-            int currentPixel = 0;
-            for (int i = 0; i < Properties.Settings.Default.top_led; i++)
-            {
-                horizontalPixelArray.Add(currentPixel += pixelDistanceW);
-            }
-
-            currentPixel = 0;
-            for (int i = 0; i < Properties.Settings.Default.top_led; i++)
-            {
-                if(currentPixel + pixelDistanceW < screenW)
-                    verticalPixelArray.Add(currentPixel += pixelDistanceW);
-            }
-            */
         }
     }
 }

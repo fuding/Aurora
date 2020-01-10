@@ -37,8 +37,8 @@ namespace Aurora.Assets
 
         public void Refresh(int horizontalOffset = 20, int verticalOffset = 20)
         {
-            refreshTop(horizontalOffset);
-            refreshBottom(horizontalOffset);
+            //refreshTop(horizontalOffset);
+            //refreshBottom(horizontalOffset);
         }
 
         public System.Drawing.Color[] getTopColors()
