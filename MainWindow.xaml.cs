@@ -29,6 +29,8 @@ namespace Aurora
         public bool status = false;
         public bool lockview = false;
 
+        public Dashboard dash;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -37,8 +39,9 @@ namespace Aurora
 
             FillText();
 
+            dash = new Dashboard();
             Panel = PagePanel.Children;
-            Panel.Add(new Dashboard());
+            Panel.Add(dash);
         }
 
         private void FillText()
@@ -109,51 +112,34 @@ namespace Aurora
         {
             _ = Task.Factory.StartNew(() =>
               {
-                  Action refreshAction = delegate
+                  Action updateApplication = delegate
                   {
-                      //screenSource.Refresh();
-                      screenSource.Refresh(90);
-                      
-                      ticks++;
+                      //Refresh ticks
+                      ticksCount.Text = "Ticks: " + ticks.ToString();
+
+                      if (!lockview)
+                      {
+                          //Refresh ticks
+                          ticksCount.Text = "Ticks: " + ticks.ToString();
+
+                          //Ram usage
+                          currentProc = Process.GetCurrentProcess();
+                          ramUsage.Text = "RAM Usage: " + (currentProc.PrivateMemorySize64 / 1024 / 1024).ToString() + "MB";
+
+                          //Refresh preview on dashboard
+                          dash.Update();
+                      }
                   };
+
                   while (true)
                   {
                       if (status)
                       {
-                          System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, refreshAction);
-                          this.Dispatcher.Invoke(() =>
-                          {
-                              serial = new SerialOutput();
-
-                              System.Drawing.Color[] pixels = screenSource.getTopColors();
-
-                              byte[] fillled = new byte[(Properties.Settings.Default.top_led * 3)];
-                              int cnt = 0;
-                              foreach (System.Drawing.Color pixel in pixels)
-                              {
-                                  fillled[cnt++] = pixel.R;
-                                  fillled[cnt++] = pixel.G;
-                                  fillled[cnt++] = pixel.B;
-                              }
-
-                              serial.FillLEDs(fillled);
-                              serial.Send();
-
-                              if (!lockview)
-                              {
-                                  //Refresh ticks
-                                  ticksCount.Text = "Ticks: " + ticks.ToString();
-
-                                  //Ram usage
-                                  currentProc = Process.GetCurrentProcess();
-                                  ramUsage.Text = "RAM Usage: " + (currentProc.PrivateMemorySize64 / 1024 / 1024).ToString() + "MB";
-
-                                  //Refresh preview on dashboard
-                                  Panel.Clear();
-                                  Panel.Add(new Dashboard());
-                              }
-                          });
+                          screenSource.Refresh(90);
+                          System.Windows.Application.Current.Dispatcher.Invoke(DispatcherPriority.Normal, updateApplication);
+                          ticks++;
                       }
+
                       System.Threading.Thread.Sleep(tickRate);
                   }
               }

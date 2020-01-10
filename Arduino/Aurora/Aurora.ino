@@ -16,6 +16,7 @@
 
 uint8_t wellcome_position = 0;
 uint8_t ledIndex = 0;
+uint8_t refresh_reset = 0;
 uint8_t status = 0;
 byte WELLCOME[] = { 0x00, 0x01, 0x02};
 
@@ -24,16 +25,23 @@ byte buffer[BUFFER_SIZE];
 
 CRGB led_array[LED_COUNT];
 
+void(* resetFunc) (void) = 0;
+
 void setup()
 {
   Serial.begin(115200);
   FastLED.clear(true);
- 222 FastLED.addLeds<WS2812B, LED_PIN, GRB>(led_array, LED_COUNT);
+  FastLED.addLeds<WS2812B, LED_PIN, GRB>(led_array, LED_COUNT);
   FastLED.setBrightness(50);
 }
 
 void loop()
 {
+  if(refresh_reset > 20)
+  {
+    resetFunc();
+  }
+  
   if(status == 0)
   {
     rainbowFill();
@@ -57,6 +65,8 @@ void fetchData()
       led_array[lds++] = CRGB(buffer[bufferOffset++], buffer[bufferOffset++], buffer[bufferOffset++]);
     }
     FastLED.delay(30);
+
+    refresh_reset++;
   }
   else
   {
@@ -95,7 +105,7 @@ void rainbowFill()
 {
   ledIndex++;
   uint8_t colorIndex = ledIndex;
-  for( int i = 0; i < 30; i++)
+  for( int i = 0; i < LED_COUNT; i++)
   {
     led_array[i] = ColorFromPalette(RainbowColors_p, colorIndex, 50, LINEARBLEND);
     colorIndex += 3;

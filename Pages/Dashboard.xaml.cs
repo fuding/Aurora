@@ -21,6 +21,11 @@ namespace Aurora.Pages
             Preview();
         }
 
+        public void Update()
+        {
+            Preview();
+        }
+
         private void Preview()
         {
             //Top led list

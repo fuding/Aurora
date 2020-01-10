@@ -14,8 +14,9 @@ namespace Aurora.Assets
 
         public SerialOutput()
         {
-            UpdateLedCount();
             portname = Properties.Settings.Default.serial_port;
+
+            UpdateLedCount();
         }
 
         private void UpdateLedCount()
@@ -33,23 +34,23 @@ namespace Aurora.Assets
                 led_count += Properties.Settings.Default.side_led;
         }
 
-        public void FillLEDs(byte[] color_array)
+        public void FillLEDs(byte[] leds)
         {
-            message = new byte[3 + 1 + (led_count * 3)];
+            message = new byte[3 + 1 + (256 * 3)];
 
             int counter = 3;
             int ledShift = 0;
 
             //Fill cells from argument
-            for (int i = 0; i < color_array.Length / 3; i++)
+            for (int i = 0; i < leds.Length / 3; i++)
             {
-                message[counter++] = color_array[ledShift++]; //RED
-                message[counter++] = color_array[ledShift++]; //GREEN
-                message[counter++] = color_array[ledShift++]; //BLUE
+                message[counter++] = leds[ledShift++]; //RED
+                message[counter++] = leds[ledShift++]; //GREEN
+                message[counter++] = leds[ledShift++]; //BLUE
             }
 
             //Fill empty cells
-            for (int i = 0; i < led_count - (color_array.Length / 3); i++)
+            for (int i = 0; i < 256 - (leds.Length / 3); i++)
             {
                 message[counter++] = 0x00; //RED
                 message[counter++] = 0x00; //GREEN

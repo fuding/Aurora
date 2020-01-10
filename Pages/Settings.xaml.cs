@@ -104,12 +104,12 @@ namespace Aurora.Pages
             Properties.Settings.Default.Save();
 
             ParentWindow.showMenu();
-            ParentWindow.Panel.Add(new Dashboard());
+            ParentWindow.Panel.Add(ParentWindow.dash);
         }
         private void ButtonCancel_Click(object sender, RoutedEventArgs e)
         {
             ParentWindow.showMenu();
-            ParentWindow.Panel.Add(new Dashboard());
+            ParentWindow.Panel.Add(ParentWindow.dash);
         }
     }
 }
